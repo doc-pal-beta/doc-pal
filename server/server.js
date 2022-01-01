@@ -10,6 +10,10 @@ app.get('/', (req, res) => {
     res.status(200).send('Test');
 });
 
+app.get('/patient', userController.getPatientInfo, (req, res) => {
+    res.status(200).json(res.locals.currentPatient)
+})
+
 app.post('/doctor', userController.createDoctor,  (req, res) => {
     console.log("I made it to docCreate");
     res.status(200).json(res.locals.doctor);
@@ -19,8 +23,10 @@ app.post('/patient', userController.createPatient, (req, res) => {
     res.status(200).json(res.locals.currentPatient)
 })
 
-app.get('/patientInfo', userController.getPatientInfo, (req, res) => {
-    res.status(200).json(res.locals.currentPatient)
+app.post('/visit', userController.createVisit, (req, res) => {
+    //Doctor creates OR selects a patient from his patient list
+    //This route expects all visit information AS WELL AS doctorID and patientId
+    res.status(200).json(res.locals.currentVisit)
 })
 
 app.use("*", (req, res) => {

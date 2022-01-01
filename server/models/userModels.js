@@ -64,6 +64,14 @@ const visitSchema = new Schema({
   plan: String,
   prescription: String,
   homeCare: String,
+  patientId: {
+    type: Schema.Types.ObjectId,
+    ref: "patient"
+  },
+  doctorId: {
+    type: Schema.Types.ObjectId,
+    ref: "patient"
+  }
 });
 
 const Visit = mongoose.model("visit", visitSchema);

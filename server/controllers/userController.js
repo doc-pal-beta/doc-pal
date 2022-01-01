@@ -4,13 +4,7 @@ const { Visit, Doctor, Patient } = models;
 const userController = {};
 
 userController.createDoctor = (req, res, next) => {
-  //const { firstName, lastName, password } = req.body;
-  console.log(req.body)
-  
     Doctor.create(req.body, (error, success) => {
-      console.log("hi")
-      console.log(error);
-      console.log(success);
       if (error) res.sendStatus(400).json(error);
       res.locals.doctor = success;
       return next();
@@ -31,6 +25,15 @@ userController.getPatientInfo = (req, res, next) => {
   Patient.findOne({lastName, dateOfBirth}, (error, success) => {
     if (error) next(error);
     res.locals.currentPatient = success;
+    next();
+  })
+}
+
+userController.createVisit = (req, res, next) => {
+//reminder dateformat === MM/DD/YYYY
+  Visit.create(req.body, (error, success) => {
+    if (error) next(error);
+    res.locals.currentVisit = success;
     next();
   })
 }
