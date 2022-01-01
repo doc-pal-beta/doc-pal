@@ -17,4 +17,22 @@ userController.createDoctor = (req, res, next) => {
     })
 };
 
+userController.createPatient = (req, res, next) => {
+  Patient.create(req.body, (error, success) => {
+    if (error) next(error);
+    res.locals.currentPatient = success;
+    next();
+  })
+}
+
+userController.getPatientInfo = (req, res, next) => {
+  // Expect to recieve query: /getPatientInfo/?lastName=<LASTNAME>&dateOfBirth=<MM/DD/YYYY>
+  const {lastName, dateOfBirth}  = req.query
+  Patient.findOne({lastName, dateOfBirth}, (error, success) => {
+    if (error) next(error);
+    res.locals.currentPatient = success;
+    next();
+  })
+}
+
 module.exports = userController;
