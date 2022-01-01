@@ -4,11 +4,11 @@ const { Visit, Doctor, Patient } = models;
 const userController = {};
 
 userController.createDoctor = (req, res, next) => {
-    Doctor.create(req.body, (error, success) => {
-      if (error) res.sendStatus(400).json(error);
-      res.locals.doctor = success;
-      return next();
-    })
+  Doctor.create(req.body, (error, success) => {
+    if (error) res.sendStatus(400).json(error);
+    res.locals.doctor = success;
+    return next();
+  });
 };
 
 userController.createPatient = (req, res, next) => {
@@ -16,26 +16,35 @@ userController.createPatient = (req, res, next) => {
     if (error) next(error);
     res.locals.currentPatient = success;
     next();
-  })
-}
+  });
+};
+
+userController.getDoctorInfo = (req, res, next) => {
+  // expects query id /doctor/?doctorId=doctorObjectId
+  Doctor.findOne({ _id: req.query.doctorId }, (error, success) => {
+    if (error) next(error);
+    res.locals.currentDoctor = success;
+    next();
+  });
+};
 
 userController.getPatientInfo = (req, res, next) => {
   // Expect to recieve query: /getPatientInfo/?lastName=<LASTNAME>&dateOfBirth=<MM/DD/YYYY>
-  const {lastName, dateOfBirth}  = req.query
-  Patient.findOne({lastName, dateOfBirth}, (error, success) => {
+  const { lastName, dateOfBirth } = req.query;
+  Patient.findOne({ lastName, dateOfBirth }, (error, success) => {
     if (error) next(error);
     res.locals.currentPatient = success;
     next();
-  })
-}
+  });
+};
 
 userController.createVisit = (req, res, next) => {
-//reminder dateformat === MM/DD/YYYY
+  //reminder dateformat === MM/DD/YYYY
   Visit.create(req.body, (error, success) => {
     if (error) next(error);
     res.locals.currentVisit = success;
     next();
-  })
-}
+  });
+};
 
 module.exports = userController;
