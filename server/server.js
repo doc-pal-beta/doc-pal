@@ -37,8 +37,7 @@ app.post("/doctors", userController.createDoctor, (req, res) => {
 app.post("/patients", userController.createPatient, (req, res) => {
   res.status(200).json(res.locals.patients);
 });
-app.post(
-  "/visits",
+app.post("/visits",
   userController.createVisit,
   userController.linkVisitToPatient,
   (req, res) => {
