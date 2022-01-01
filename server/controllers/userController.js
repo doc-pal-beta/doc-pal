@@ -1,6 +1,6 @@
 const models = require("../models/userModels");
 const { Visit, Doctor, Patient } = models;
-
+const bcrypt = require("bcrypt");
 const userController = {};
 //GET
 userController.getPatient = (req, res, next) => {
@@ -48,17 +48,23 @@ userController.getVisits = (req, res, next) => {
 
 //POST
 userController.createDoctor = (req, res, next) => {
-  Doctor.create(req.body, (error, success) => {
-    if (error) res.sendStatus(400).json(error);
-    res.locals.newDoctor = success;
-    return next();
+  bcrypt.hash(req.body.password, 10, (error, hash) => {
+    Object.assign(req.body, { password: hash });
+    Doctor.create(req.body, (error, success) => {
+      if (error) res.sendStatus(400).json(error);
+      res.locals.newDoctor = success;
+      return next();
+    });
   });
 };
 userController.createPatient = (req, res, next) => {
-  Patient.create(req.body, (error, success) => {
-    if (error) next(error);
-    res.locals.newPatient = success;
-    next();
+  bcrypt.hash(req.body.password, 10, (error, hash) => {
+    Object.assign(req.body, { password: hash });
+    Patient.create(req.body, (error, success) => {
+      if (error) next(error);
+      res.locals.newPatient = success;
+      next();
+    });
   });
 };
 userController.createVisit = (req, res, next) => {
@@ -68,6 +74,8 @@ userController.createVisit = (req, res, next) => {
     next();
   });
 };
+
+//Link/Add to Collection
 userController.linkVisitToPatient = (req, res, next) => {
   console.log(req.body, res.locals.newVisit);
   Patient.findOne({ _id: req.body.patientId }, (error, patient) => {
