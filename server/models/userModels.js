@@ -15,21 +15,20 @@ mongoose
 const Schema = mongoose.Schema;
 
 const patientSchema = new Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  password: { type: String, required: true },
-  dateOfBirth: { type: String, required: true }, // MM/DD/YYYY
-  sex: String,
-  language: String,
-  address: String,
-  primaryDoctor: {
+  "firstName": { type: String, required: true },
+  "lastName": { type: String, required: true },
+  "password": { type: String, required: true },
+  "dateOfBirth": { type: String, required: true }, // MM/DD/YYYY
+  "sex": String,
+  "language": String,
+  "address": String,
+  "primaryDoctor": {
     type: Schema.Types.ObjectId,
     ref: "doctor",
   },
-  visits: [
+  "visits": [
     {
-      visitDate: { type: String, required: true }, // MM/DD/YYYY
-      id: {
+      "visitId": {
         type: Schema.Types.ObjectId,
         ref: "visit",
       },
@@ -38,16 +37,14 @@ const patientSchema = new Schema({
 });
 
 const doctorSchema = new Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  password: { type: String, required: true },
-  licenseNumber: { type: Number, required: true },
-  title: String,
-  patients: [
+  "firstName": { type: String, required: true },
+  "lastName": { type: String, required: true },
+  "password": { type: String, required: true },
+  "licenseNumber": { type: Number, required: true },
+  "title": String,
+  "patients": [
     {
-      lastName: { type: String, required: true },
-      dateOfBirth: { type: String, required: true }, // MM/DD/YYYY
-      id: {
+      "id": {
         type: Schema.Types.ObjectId,
         ref: "patient",
       },
@@ -56,22 +53,22 @@ const doctorSchema = new Schema({
 });
 
 const visitSchema = new Schema({
-  date: { type: String, required: true }, // MM/DD/YYYY
+  "date": { type: String, required: true }, // MM/DD/YYYY
   //SOAP NOTE: S:subjective complaints, O:objective observations, A:assessment/diagnosis, P:plan
-  subjective: String,
-  objective: String,
-  assessment: String,
-  plan: String,
-  prescription: String,
-  homeCare: String,
-  patientId: {
+  "subjective": String,
+  "objective": String,
+  "assessment": String,
+  "plan": String,
+  "prescription": String,
+  "homeCare": String,
+  "patientId": {
     type: Schema.Types.ObjectId,
-    ref: "patient"
+    ref: "patient",
   },
-  doctorId: {
+  "doctorId": {
     type: Schema.Types.ObjectId,
-    ref: "patient"
-  }
+    ref: "patient",
+  },
 });
 
 const Visit = mongoose.model("visit", visitSchema);
