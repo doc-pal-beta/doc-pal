@@ -35,4 +35,13 @@ userController.getPatientInfo = (req, res, next) => {
   })
 }
 
+userController.createVisit = (req, res, next) => {
+//reminder dateformat === MM/DD/YYYY
+  Visit.create(req.body, (error, success) => {
+    if (error) next(error);
+    res.locals.currentVisit = success;
+    next();
+  })
+}
+
 module.exports = userController;
