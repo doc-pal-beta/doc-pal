@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+const cors = require('cors');
 //controllers
 const userController = require("./controllers/userController");
 //parsers
@@ -10,6 +11,7 @@ const cookieParser = require("cookie-parser");
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors);
 
 app.get("/authenticate", userController.authenticate, (req, res) => {
   res.status(200).send({
