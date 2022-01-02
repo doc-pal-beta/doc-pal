@@ -47,7 +47,8 @@ app.post("/doctors", userController.createDoctor, (req, res) => {
 app.post("/patients", userController.createPatient, (req, res) => {
   res.status(200).json(res.locals.newPatient);
 });
-app.post("/visits",
+app.post(
+  "/visits",
   userController.createVisit,
   userController.linkVisitToPatient,
   (req, res) => {
@@ -58,7 +59,8 @@ app.post("/visits",
   }
 );
 
-app.post("/doctors/login",
+app.post(
+  "/doctors/login",
   userController.doctorLogin,
   userController.startSession,
   (req, res) => {
@@ -70,7 +72,8 @@ app.post("/doctors/login",
 );
 
 //PUT
-app.put("/doctors/:doctorId/patients/:patientId",
+app.put(
+  "/doctors/:doctorId/patients/:patientId",
   userController.linkPatientToDoctor,
   (req, res) => {
     //this says that we PUT a new patient into the doctors collections

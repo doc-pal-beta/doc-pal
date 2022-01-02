@@ -8,28 +8,34 @@ const jwt = require("jsonwebtoken");
 
 //GET
 userController.getPatient = (req, res, next) => {
-  Patient.findOne({ id: req.params.id }, (error, success) => {
-    if (error) next(error);
-    res.locals.patient = success;
-    next();
-  });
+  Patient.findOne({ id: req.params.id })
+    .populate("visits")
+    .exec((error, success) => {
+      if (error) next(error);
+      res.locals.patient = success;
+      next();
+    });
 };
 userController.getPatients = (req, res, next) => {
-  Patient.find(req.query, (error, success) => {
-    console.log(error, success);
-    if (error) next(error);
-    res.locals.patients = success;
-    next();
-  });
+  Patient.find(req.query)
+    .populate("visits")
+    .exec((error, success) => {
+      console.log(error, success);
+      if (error) next(error);
+      res.locals.patients = success;
+      next();
+    });
 };
 
 userController.getDoctors = (req, res, next) => {
   // query or empty query for all
-  Doctor.find(req.query, (error, success) => {
-    if (error) next(error);
-    res.locals.doctors = success;
-    next();
-  });
+  Doctor.find(req.query)
+    .populate("patients")
+    .exec((error, success) => {
+      if (error) next(error);
+      res.locals.doctors = success;
+      next();
+    });
 };
 userController.getDoctor = (req, res, next) => {
   // expects param id /doctors/doctorObjectId
@@ -43,12 +49,13 @@ userController.getDoctor = (req, res, next) => {
 };
 
 userController.getVisits = (req, res, next) => {
-  Visit.find(req.query, (error, success) => {
-    console.log(error, success);
-    if (error) next(error);
-    res.locals.visits = success;
-    next();
-  });
+  Visit.find(req.query)
+    .populate(["patientId", "doctorId"])
+    .exec((error, success) => {
+      if (error) next(error);
+      res.locals.visits = success;
+      next();
+    });
 };
 
 //POST
@@ -82,8 +89,8 @@ userController.createVisit = (req, res, next) => {
 
 //Link/Add to Collection
 userController.linkVisitToPatient = (req, res, next) => {
-  Patient.findOne({ _id: req.body.patientId }, (error, patient) => {
-    patient.visits.push({ visitId: res.locals.newVisit._id });
+  Patient.findOne({ _id: req.body.patientId }).exec((error, patient) => {
+    patient.visits.push(res.locals.newVisit._id);
     patient.save((err) => {
       if (err) next(err);
       next();
@@ -91,8 +98,9 @@ userController.linkVisitToPatient = (req, res, next) => {
   });
 };
 userController.linkPatientToDoctor = (req, res, next) => {
-  Doctor.findOne({ _id: req.params.doctorId }, (error, doctor) => {
-    doctor.patients.push({ patientId: req.params.patientId });
+  const { doctorId, patientId } = req.params;
+  Doctor.findOne({ _id: doctorId }).exec((error, doctor) => {
+    doctor.patients.push(patientId);
     doctor.save((err) => {
       if (err) next(err);
       res.locals.doctor = doctor;
@@ -116,7 +124,7 @@ userController.startSession = (req, res, next) => {
       },
       privateKey, //ARG 2 PRIVATE KEY
       {
-        expiresIn: 60 * 60 * 2, //ARG 3 OPTIONS
+        expiresIn: 60 * 60 * 2, //ARG 3 OPTIONS: 2 hour session expiry
       },
       (err, token) => {
         // ARG 4 CALLBACK
@@ -136,6 +144,7 @@ userController.authenticate = async (req, res, next) => {
     path.join(__dirname, "./privatekey.json"),
     "utf-8"
   );
+
   const verified = await jwt.verify(token, privateKey, (error, payload) => {
     if (error) return next(error);
     return payload;
