@@ -1,37 +1,74 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
-function SignUp({login}) {
+function SignUp() {
 
-    const [details, setDetails] = useState({
-        username:'',
-        email:'',
-        password:'',
-        password2:''
-    })
+    const initialValues = {username:"", email:'', password:"", password2:""};
+    const [details, setDetails] = useState(initialValues);
+    const [formErrors, setFormErrors] = useState({});
+    const [isSubmit, setSubmit] = useState(false);
+
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setDetails({...details, [name]:value});
+    }
     
     const submitHandler = e =>{
         e.preventDefault();
-        login(details);
-    }
+        setFormErrors(validate(details));
+        setSubmit(true);
+    }    
+
+    useEffect(()=>{
+        console.log(formErrors);
+        if(Object.keys(formErrors).length===0 & isSubmit){
+            console.log(details);
+            //fetch 
+        }
+    })
+    const validate = (values) =>{
+        const errors={};
+        const regex = /^[^s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    
+        if(!values.username){
+            errors.username= "Username is required"
+        }
+        if(!values.email){
+            errors.email= "Email address is required"
+        }
+        if(!values.password){
+            errors.password="Password is required"
+        }
+        if(!values.password2){
+            errors.password2="Confirmation Password is required"
+        }
+        if(values.password !== values.password2){
+            errors.password2="Password didn't match"
+        }
+        return errors;
+    };
     return (
         <div className='container'>
             <h2></h2>
             <form className='SignUp' onSubmit={submitHandler}>Create Account
                 <br/>
+                <p className='error_msg'>{formErrors.username}</p>
                 <label className='label'> Username:
-                    <input className='textbox' type='text' placeholder='Enter Username' onChange={e => setDetails({...details, username: e.target.value})} value={details.username}></input>
+                    <input className='textbox' type='text' name='username' placeholder='Enter Username' onChange={handleChange}></input>
                 </label>
                 <br />
+                <p className='error_msg'>{formErrors.email}</p>
                 <label className='label'> Email :
-                    <input className='textbox' type='text' placeholder='Enter Email' onChange={e => setDetails({...details, email: e.target.value})} value={details.email}></input>
+                    <input className='textbox' type='text' name='email' placeholder='Enter Email' onChange={handleChange} value={details.email}></input>
                 </label>
                 <br />
+                <p className='error_msg'>{formErrors.password}</p>
                 <label className='label'> Password:
-                    <input className='textbox' type='password' placeholder='Enter Password' onChange={e => setDetails({...details, password: e.target.value})} value={details.password}></input>
+                    <input className='textbox' type='password' name='password' placeholder='Enter Password' onChange={handleChange} value={details.password}></input>
                 </label>
                 <br />
+                <p className='error_msg'>{formErrors.password2}</p>
                 <label className='label'> Password:
-                    <input className='textbox' type='password' placeholder='Re-Enter Password' onChange={e => setDetails({...details, password2: e.target.value})} value={details.password2}></input>
+                    <input className='textbox' type='password' name='password2' placeholder='Re-Enter Password' onChange={handleChange} value={details.password2}></input>
                 </label>
                 <br />
                 <div className='button'>
