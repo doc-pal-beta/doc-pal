@@ -7,7 +7,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
     // sets the name of the DB that our collections are part of
-    dbName: "dndcharactersheets",
+    dbName: "docPalDB",
   })
   .then(() => console.log("Connected to Mongo DB."))
   .catch((err) => console.log(err));
@@ -15,57 +15,53 @@ mongoose
 const Schema = mongoose.Schema;
 
 const patientSchema = new Schema({
-  "firstName": { type: String, required: true },
-  "lastName": { type: String, required: true },
-  "password": { type: String, required: true },
-  "dateOfBirth": { type: String, required: true }, // MM/DD/YYYY
-  "sex": String,
-  "language": String,
-  "address": String,
-  "primaryDoctor": {
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  password: { type: String, required: true },
+  dateOfBirth: { type: String, required: true }, // MM/DD/YYYY
+  sex: String,
+  language: String,
+  address: String,
+  primaryDoctor: {
     type: Schema.Types.ObjectId,
     ref: "doctor",
   },
-  "visits": [
+  visits: [
     {
-      "visitId": {
-        type: Schema.Types.ObjectId,
-        ref: "visit",
-      },
+      type: Schema.Types.ObjectId,
+      ref: "visit",
     },
   ],
 });
 
 const doctorSchema = new Schema({
-  "firstName": { type: String, required: true },
-  "lastName": { type: String, required: true },
-  "password": { type: String, required: true },
-  "licenseNumber": { type: Number, required: true },
-  "title": String,
-  "patients": [
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  password: { type: String, required: true },
+  licenseNumber: { type: Number, required: true },
+  title: String,
+  patients: [
     {
-      "id": {
-        type: Schema.Types.ObjectId,
-        ref: "patient",
-      },
+      type: Schema.Types.ObjectId,
+      ref: "patient",
     },
   ],
 });
 
 const visitSchema = new Schema({
-  "date": { type: String, required: true }, // MM/DD/YYYY
+  date: { type: String, required: true }, // MM/DD/YYYY
   //SOAP NOTE: S:subjective complaints, O:objective observations, A:assessment/diagnosis, P:plan
-  "subjective": String,
-  "objective": String,
-  "assessment": String,
-  "plan": String,
-  "prescription": String,
-  "homeCare": String,
-  "patientId": {
+  subjective: String,
+  objective: String,
+  assessment: String,
+  plan: String,
+  prescription: String,
+  homeCare: String,
+  patientId: {
     type: Schema.Types.ObjectId,
     ref: "patient",
   },
-  "doctorId": {
+  doctorId: {
     type: Schema.Types.ObjectId,
     ref: "patient",
   },

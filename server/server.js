@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const userController = require("./controllers/userController");
+//parsers
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 
 app.use(express.json());
