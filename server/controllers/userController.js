@@ -10,8 +10,8 @@ const jwt = require("jsonwebtoken");
 userController.getPatient = (req, res, next) => {
   Patient.findOne({ id: req.params.id })
     .populate(["primaryDoctor", "visits"])
-    .exec((error, success) => {
-      if (error) next(error);
+    .exec((err, success) => {
+      if (err) next(err);
       res.locals.patient = success;
       next();
     });
@@ -19,9 +19,9 @@ userController.getPatient = (req, res, next) => {
 userController.getPatients = (req, res, next) => {
   Patient.find(req.query)
     .populate(["primaryDoctor", "visits"])
-    .exec((error, success) => {
-      console.log(error, success);
-      if (error) next(error);
+    .exec((err, success) => {
+      console.log(err, success);
+      if (err) next(err);
       res.locals.patients = success;
       next();
     });
@@ -31,8 +31,8 @@ userController.getDoctors = (req, res, next) => {
   // query or empty query for all
   Doctor.find(req.query)
     .populate("patients")
-    .exec((error, success) => {
-      if (error) next(error);
+    .exec((err, success) => {
+      if (err) next(err);
       res.locals.doctors = success;
       next();
     });
@@ -40,9 +40,10 @@ userController.getDoctors = (req, res, next) => {
 userController.getDoctor = (req, res, next) => {
   // expects param id /doctors/doctorObjectId
   Doctor.findOne({ _id: req.params.id })
-    .populate("patient")
+    .populate("patients")
     .exec((err, doctor) => {
-      if (error) next(error);
+      console.log(err, doctor);
+      if (err) next(err);
       res.locals.doctor = doctor;
       next();
     });
@@ -75,6 +76,8 @@ userController.createPatient = (req, res, next) => {
     Patient.create(req.body, (error, success) => {
       if (error) next(error);
       res.locals.newPatient = success;
+      req.params.doctorId = req.body.primaryDoctor;
+      req.params.patientId = success._id;
       next();
     });
   });
@@ -196,7 +199,7 @@ userController.doctorLogin = (req, res, next) => {
 userController.patientLogin = (req, res, next) => {
   const { firstName, lastName, password } = req.body;
   Patient.findOne({ firstName, lastName })
-    .populate("visit")
+    .populate("visits")
     .exec((error, patient) => {
       bcrypt.compare(password, patient.password, (error, result) => {
         if (error) return next(error);
