@@ -36,7 +36,7 @@ userController.getDoctors = (req, res, next) => {
       res.locals.doctors = success;
       next();
     });
-};;
+};
 userController.getDoctor = (req, res, next) => {
   // expects param id /doctors/doctorObjectId
   Doctor.findOne({ _id: req.params.id })
