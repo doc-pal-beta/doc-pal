@@ -44,9 +44,14 @@ app.get("/visits", userController.getVisits, (req, res) => {
 app.post("/doctors", userController.createDoctor, (req, res) => {
   res.status(200).json(res.locals.newDoctor);
 });
-app.post("/patients", userController.createPatient, (req, res) => {
-  res.status(200).json(res.locals.newPatient);
-});
+app.post(
+  "/patients",
+  userController.createPatient,
+  userController.linkPatientToDoctor,
+  (req, res) => {
+    res.status(200).json(res.locals.newPatient);
+  }
+);
 app.post(
   "/visits",
   userController.createVisit,
