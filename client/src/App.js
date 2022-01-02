@@ -1,6 +1,6 @@
 
 import React from "react";
-import { hot } from 'react-hot-loader/root';
+import Login from './components/Login';
 
 class App extends React.Component {
   render() {
@@ -8,11 +8,11 @@ class App extends React.Component {
     return (
       <>
         <h1>
-          Hello {name}
+          <Login />
         </h1>
       </>
     );
   }
 }
 
-export default hot(App);
+export default App;
