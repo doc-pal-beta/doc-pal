@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/authenticate", userController.authenticate, (req, res) => {
   res.status(200).send({
     loggedIn: res.locals.loggedIn,
-    usetType: res.locals.userType,
+    userType: res.locals.userType,
     currentUser: res.locals.currentUser,
   });
 });
