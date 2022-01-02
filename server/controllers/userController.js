@@ -2,10 +2,13 @@ const models = require("../models/userModels");
 const { Visit, Doctor, Patient } = models;
 const bcrypt = require("bcrypt");
 const userController = {};
+const fs = require("fs");
+const path = require("path");
+const jwt = require("jsonwebtoken");
+
 //GET
 userController.getPatient = (req, res, next) => {
   Patient.findOne({ id: req.params.id }, (error, success) => {
-    console.log(error, success);
     if (error) next(error);
     res.locals.patient = success;
     next();
@@ -30,9 +33,9 @@ userController.getDoctors = (req, res, next) => {
 };
 userController.getDoctor = (req, res, next) => {
   // expects param id /doctors/doctorObjectId
-  Doctor.findOne({ _id: req.params.id }, (error, success) => {
+  Doctor.findOne({ _id: req.params.id }, (error, doctor) => {
     if (error) next(error);
-    res.locals.doctor = success;
+    res.locals.doctor = doctor;
     next();
   });
 };
@@ -77,17 +80,123 @@ userController.createVisit = (req, res, next) => {
 
 //Link/Add to Collection
 userController.linkVisitToPatient = (req, res, next) => {
-  console.log(req.body, res.locals.newVisit);
   Patient.findOne({ _id: req.body.patientId }, (error, patient) => {
-    console.log("hi");
     patient.visits.push({ visitId: res.locals.newVisit._id });
-    console.log("hi");
     patient.save((err) => {
-      console.log("hi");
       if (err) next(err);
       next();
     });
   });
+};
+userController.linkPatientToDoctor = (req, res, next) => {
+  Doctor.findOne({ _id: req.params.doctorId }, (error, doctor) => {
+    doctor.patients.push({ patientId: req.params.patientId });
+    doctor.save((err) => {
+      if (err) next(err);
+      res.locals.doctor = doctor;
+      next();
+    });
+  });
+};
+
+//Session Storage and store user meta data through JWT
+userController.startSession = (req, res, next) => {
+  if (res.locals.loggedIn) {
+    privateKey = fs.readFileSync(
+      path.join(__dirname, "./privatekey.json"),
+      "utf-8"
+    );
+    //ARG 1 JWT USER META DATA ***NO SENSITIVE INFO***
+    jwt.sign(
+      {
+        cookieId: res.locals.sessionId,
+        userId: res.locals.currentUser._id,
+      },
+      privateKey, //ARG 2 PRIVATE KEY
+      {
+        expiresIn: 6000, //ARG 3 OPTIONS
+      },
+      (err, token) => {
+        // ARG 4 CALLBACK
+        res.cookie("JWT", token, { httpOnly: true });
+        next();
+      }
+    );
+  } else {
+    next();
+  }
+};
+//Check if user has a session storage JWT
+userController.continueSession = (req, res, next) => {
+  res.locals.loggedIn = false;
+  const token = req.cookies.JWT;
+  const privateKey = fs.readFileSync(
+    path.join(__dirname, "./privatekey.json"),
+    "utf-8"
+  );
+  jwt.verify(token, privateKey, (error, payload) => {
+    if (error) {
+      next(error);
+    } else {
+      Doctor.findOne({ _id: payload.userId }, (error, doctor) => {
+        if (error) {
+          Patient.findOne({ _id: payload.userId }, (error, patient) => {
+            if (error) {
+              next(error);
+            } else {
+              res.locals.currentUser = patient;
+              res.locals.loggedIn = true;
+              res.locals.userType = "patient";
+              next();
+            }
+          });
+        } else {
+          res.locals.currentUser = doctor;
+          res.locals.loggedIn = true;
+          res.locals.userType = "doctor";
+          next();
+        }
+      });
+    }
+  });
+};
+
+userController.doctorLogin = (req, res, next) => {
+  Doctor.findOne(
+    { firstName: req.body.firstName, lastName: req.body.lastName },
+    (error, doctor) => {
+      bcrypt.compare(req.body.password, doctor.password, (error, result) => {
+        if (error) return next(error);
+        if (result === true) {
+          res.locals.currentUser = doctor;
+          res.locals.loggedIn = true;
+          return next();
+        } else if (result === false) {
+          res.locals.loggedIn = false;
+          return next();
+        }
+      });
+    }
+  );
+};
+
+userController.patientLogin = (req, res, next) => {
+  Patient.findOne(
+    { firstName: req.body.firstName, lastName: req.body.lastName },
+    (error, patient) => {
+      bcrypt.compare(req.body.password, patient.password, (error, result) => {
+        if (error) return next(error);
+        if (result === true) {
+          res.locals.currentUser = patient;
+          res.locals.loggedIn = true;
+          return next();
+        } else if (result === false) {
+          res.locals.loggedIn = false;
+          return next();
+        }
+      });
+    }
+  );
 };
 
 module.exports = userController;

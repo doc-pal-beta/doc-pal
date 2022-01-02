@@ -44,7 +44,7 @@ const doctorSchema = new Schema({
   "title": String,
   "patients": [
     {
-      "id": {
+      "patientId": {
         type: Schema.Types.ObjectId,
         ref: "patient",
       },
