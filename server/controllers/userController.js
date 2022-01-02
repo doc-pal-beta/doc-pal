@@ -71,17 +71,31 @@ userController.createDoctor = (req, res, next) => {
   });
 };
 userController.createPatient = (req, res, next) => {
-  bcrypt.hash(req.body.password, 10, (error, hash) => {
-    Object.assign(req.body, { password: hash });
-    Patient.create(req.body, (error, success) => {
+  // bcrypt.hash(req.body.password, 10, (error, hash) => {
+  //   Object.assign(req.body, { password: hash });
+  const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const passwordLength = 6;
+  
+  let tempPassword = ' ';
+  for ( let i = 0; i < passwordLength; i++ ) {
+    tempPassword += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+
+  const { firstName, lastName, dateOfBirth} = req.body;
+
+    Patient.create({ firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth, password: tempPassword}, (error, success) => {
       if (error) next(error);
+      
       res.locals.newPatient = success;
       req.params.doctorId = req.body.primaryDoctor;
       req.params.patientId = success._id;
+      console.log(success)
       next();
-    });
-  });
-};
+    })
+  }
+
+
+
 userController.createVisit = (req, res, next) => {
   Visit.create(req.body, (error, success) => {
     if (error) next(error);
@@ -214,5 +228,6 @@ userController.patientLogin = (req, res, next) => {
       });
     });
 };
+
 
 module.exports = userController;
