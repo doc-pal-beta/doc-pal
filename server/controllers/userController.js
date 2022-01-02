@@ -33,11 +33,13 @@ userController.getDoctors = (req, res, next) => {
 };
 userController.getDoctor = (req, res, next) => {
   // expects param id /doctors/doctorObjectId
-  Doctor.findOne({ _id: req.params.id }, (error, doctor) => {
-    if (error) next(error);
-    res.locals.doctor = doctor;
-    next();
-  });
+  Doctor.findOne({ _id: req.params.id })
+    .populate("patient")
+    .exec((err, doctor) => {
+      if (error) next(error);
+      res.locals.doctor = doctor;
+      next();
+    });
 };
 
 userController.getVisits = (req, res, next) => {
@@ -114,7 +116,7 @@ userController.startSession = (req, res, next) => {
       },
       privateKey, //ARG 2 PRIVATE KEY
       {
-        expiresIn: 6000, //ARG 3 OPTIONS
+        expiresIn: 60 * 60 * 2, //ARG 3 OPTIONS
       },
       (err, token) => {
         // ARG 4 CALLBACK
@@ -127,45 +129,48 @@ userController.startSession = (req, res, next) => {
   }
 };
 //Check if user has a session storage JWT
-userController.authenticate = (req, res, next) => {
+userController.authenticate = async (req, res, next) => {
   res.locals.loggedIn = false;
   const token = req.cookies.JWT;
   const privateKey = fs.readFileSync(
     path.join(__dirname, "./privatekey.json"),
     "utf-8"
   );
-  jwt.verify(token, privateKey, (error, payload) => {
-    if (error) {
-      next(error);
-    } else {
-      Doctor.findOne({ _id: payload.userId }, (error, doctor) => {
-        if (error) {
-          Patient.findOne({ _id: payload.userId }, (error, patient) => {
-            if (error) {
-              next(error);
-            } else {
-              res.locals.currentUser = patient;
-              res.locals.loggedIn = true;
-              res.locals.userType = "patient";
-              next();
-            }
-          });
-        } else {
-          res.locals.currentUser = doctor;
-          res.locals.loggedIn = true;
-          res.locals.userType = "doctor";
-          next();
-        }
-      });
-    }
+  const verified = await jwt.verify(token, privateKey, (error, payload) => {
+    if (error) return next(error);
+    return payload;
   });
+
+  Doctor.findOne({ _id: verified.userId })
+    .populate("patients")
+    .exec((error, doctor) => {
+      console.log(doctor);
+      if (error) {
+        Patient.findOne({ _id: verified.userId })
+          .populate("visits")
+          .exec((error, patient) => {
+            if (error) return next(error);
+            res.locals.currentUser = patient;
+            res.locals.loggedIn = true;
+            res.locals.userType = "patient";
+            return next();
+          });
+      }
+      res.locals.currentUser = doctor;
+      res.locals.loggedIn = true;
+      res.locals.userType = "doctor";
+      return next();
+    });
 };
 
 userController.doctorLogin = (req, res, next) => {
-  Doctor.findOne(
-    { firstName: req.body.firstName, lastName: req.body.lastName },
-    (error, doctor) => {
-      bcrypt.compare(req.body.password, doctor.password, (error, result) => {
+  const { firstName, lastName, password } = req.body;
+  Doctor.findOne({ firstName, lastName })
+    .populate("patients")
+    .exec((error, doctor) => {
+      console.log(error, doctor);
+      bcrypt.compare(password, doctor.password, (error, result) => {
+        console.log(result);
         if (error) return next(error);
         if (result === true) {
           res.locals.currentUser = doctor;
@@ -176,15 +181,15 @@ userController.doctorLogin = (req, res, next) => {
           return next();
         }
       });
-    }
-  );
+    });
 };
 
 userController.patientLogin = (req, res, next) => {
-  Patient.findOne(
-    { firstName: req.body.firstName, lastName: req.body.lastName },
-    (error, patient) => {
-      bcrypt.compare(req.body.password, patient.password, (error, result) => {
+  const { firstName, lastName, password } = req.body;
+  Patient.findOne({ firstName, lastName })
+    .populate("visit")
+    .exec((error, patient) => {
+      bcrypt.compare(password, patient.password, (error, result) => {
         if (error) return next(error);
         if (result === true) {
           res.locals.currentUser = patient;
@@ -195,8 +200,7 @@ userController.patientLogin = (req, res, next) => {
           return next();
         }
       });
-    }
-  );
+    });
 };
 
 module.exports = userController;
