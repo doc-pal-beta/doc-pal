@@ -127,7 +127,7 @@ userController.startSession = (req, res, next) => {
   }
 };
 //Check if user has a session storage JWT
-userController.continueSession = (req, res, next) => {
+userController.authenticate = (req, res, next) => {
   res.locals.loggedIn = false;
   const token = req.cookies.JWT;
   const privateKey = fs.readFileSync(
