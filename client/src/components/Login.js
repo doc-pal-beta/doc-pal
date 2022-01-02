@@ -18,19 +18,19 @@ function Login() {
         setSubmit(true);
     }    
 
-    useEffect(()=>{
+    useEffect((id)=>{
         
         if(Object.keys(formErrors).length===0 & isSubmit){
             console.log(details);
             //fetch data from patient side
             if(details.member==='patient'){
-                fetch('http://localhost:3000/patients')
+                fetch(`http://localhost:3000/patient/:${id}`)
                 .then(res => res.json())
                 .then(data => setDetails({data}));
             }
             //fetch data from doctor side
             if(details.member==='doctor'){
-                fetch('http://localhost:3000/doctors/:')
+                fetch(`http://localhost:3000/doctor/${id}`)
                 .then(res => res.json())
                 .then(data => setDetails({data}));
             }
@@ -40,7 +40,6 @@ function Login() {
 
     const validate = (values) =>{
         const errors={};
-        const regex = /^[^s@]+@[^\s@]+\.[^\s@]{2,}$/i;
         if(!values.member){
             errors.member="Please choose either patient or doctor"
         }
