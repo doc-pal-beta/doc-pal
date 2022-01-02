@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 //GET
 userController.getPatient = (req, res, next) => {
   Patient.findOne({ id: req.params.id })
-    .populate("visits")
+    .populate(["primaryDoctor", "visits"])
     .exec((error, success) => {
       if (error) next(error);
       res.locals.patient = success;
@@ -18,7 +18,7 @@ userController.getPatient = (req, res, next) => {
 };
 userController.getPatients = (req, res, next) => {
   Patient.find(req.query)
-    .populate("visits")
+    .populate(["primaryDoctor", "visits"])
     .exec((error, success) => {
       console.log(error, success);
       if (error) next(error);
