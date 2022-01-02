@@ -28,10 +28,8 @@ const patientSchema = new Schema({
   },
   "visits": [
     {
-      "visitId": {
-        type: Schema.Types.ObjectId,
-        ref: "visit",
-      },
+      type: Schema.Types.ObjectId,
+      ref: "visit",
     },
   ],
 });
@@ -44,10 +42,8 @@ const doctorSchema = new Schema({
   "title": String,
   "patients": [
     {
-      "id": {
-        type: Schema.Types.ObjectId,
-        ref: "patient",
-      },
+      type: Schema.Types.ObjectId,
+      ref: "patient",
     },
   ],
 });

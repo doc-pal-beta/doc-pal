@@ -1,12 +1,22 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+//controllers
 const userController = require("./controllers/userController");
+//parsers
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 app.use(express.json());
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.status(200).send("Test");
+app.get("/authenticate", userController.authenticate, (req, res) => {
+  res.status(200).send({
+    loggedIn: res.locals.loggedIn,
+    userType: res.locals.userType,
+    currentUser: res.locals.currentUser,
+  });
 });
 
 //GET
@@ -35,9 +45,10 @@ app.post("/doctors", userController.createDoctor, (req, res) => {
   res.status(200).json(res.locals.newDoctor);
 });
 app.post("/patients", userController.createPatient, (req, res) => {
-  res.status(200).json(res.locals.patients);
+  res.status(200).json(res.locals.newPatient);
 });
-app.post("/visits",
+app.post(
+  "/visits",
   userController.createVisit,
   userController.linkVisitToPatient,
   (req, res) => {
@@ -45,6 +56,28 @@ app.post("/visits",
     //This route expects all visit information AS WELL AS doctorID and patientId
     //will automatically add visit to patients records.
     res.status(200).json(res.locals.newVisit);
+  }
+);
+
+app.post(
+  "/doctors/login",
+  userController.doctorLogin,
+  userController.startSession,
+  (req, res) => {
+    res.status(200).json({
+      currentUser: res.locals.currentUser,
+      loggedIn: res.locals.loggedIn,
+    });
+  }
+);
+
+//PUT
+app.put(
+  "/doctors/:doctorId/patients/:patientId",
+  userController.linkPatientToDoctor,
+  (req, res) => {
+    //this says that we PUT a new patient into the doctors collections
+    res.status(200).json(res.locals.doctor);
   }
 );
 
