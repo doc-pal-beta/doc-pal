@@ -57,13 +57,13 @@ const config = {
       directory: path.join(__dirname, 'dist')
     },
     port: 8080,
-    proxy: {
-      '/api': {
-          target: 'http://localhost:3000',
-          pathRewrite: { '^/api': '' },
-          secure: false
-      }
-    },
+    // proxy: {
+    //   '/api': {
+    //       target: 'http://localhost:3000',
+    //       pathRewrite: { '^/api': '' },
+    //       secure: false
+    //   }
+    // },
   },
   
   plugins: [
