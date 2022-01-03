@@ -24,7 +24,6 @@ import React, {Component} from 'react'
 
 class NewPatient extends Component {
   handleSubmitClick () {
-    console.log(this.props.userDetails.userData._id)
     const primaryDoctor = this.props.userDetails.userData._id
     const firstName = document.getElementById('newPatientFirstName').value
     const lastName = document.getElementById('newPatientLastName').value

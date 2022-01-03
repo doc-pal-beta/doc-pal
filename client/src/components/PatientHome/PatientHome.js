@@ -11,12 +11,9 @@ const PatientHome = ({ userDetails }) => {
 
 
   console.log("The patients data is", userData);
-
-  useEffect(() => {
-    // check session token to make sure user is logged in.
-  }, []);
-
-  console.log('')
+  const handleChangePass= () => {
+    navigate('/changePass')
+  }
 
   const newData = [];
   for (let i = 0; i < userDetails.userData.visits.length; i++) {
@@ -24,12 +21,6 @@ const PatientHome = ({ userDetails }) => {
       <DatailVisitCard visit_Data={userDetails.userData.visits[i]} key={i} />
     );
   }
-  
-  console.log('User data', userDetails);
-  newData = []
-    for(let i=0; i< visit_Data.length; i++){
-      newData.push(<DatailVisitCard visit_Data={visit_Data[i]} key={visit_Data.id} />)
-    }
   
   return (
     <div>
