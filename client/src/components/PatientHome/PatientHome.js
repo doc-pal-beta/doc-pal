@@ -28,10 +28,7 @@ const PatientHome = ({ userDetails, setUserDetails }) => {
   }, []);
 
   console.log('Patient Data are', userDetails.userData)
-  const handleProfile =() =>{
-    navigate("/patient/datalist");
-
-  }
+  
 
   return (
     <div>
@@ -44,7 +41,7 @@ const PatientHome = ({ userDetails, setUserDetails }) => {
         userDetails.userData.visits.map((visit, key) => (
           <DatailVisitCard visit_Data={visit} key={key} />
         ))}
-        <button className="btn" onClick={handleProfile} patientData = {userDetails.userData}>Profile</button>
+        <button className="btn">Profile</button>
     </div>
   );
 };
