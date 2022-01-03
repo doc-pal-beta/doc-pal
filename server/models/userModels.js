@@ -52,7 +52,7 @@ const doctorSchema = new Schema({
 const visitSchema = new Schema({
   date: { type: String, required: true }, // MM/DD/YYYY
   //SOAP NOTE: S:subjective complaints, O:objective observations, A:assessment/diagnosis, P:plan
-  subjective: String,
+  dz3qE1: String,
   objective: String,
   assessment: String,
   plan: String,

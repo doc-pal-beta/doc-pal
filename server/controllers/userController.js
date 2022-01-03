@@ -243,4 +243,18 @@ userController.patientLogin = (req, res, next) => {
     });
 };
 
+userController.changePassword = (req, res, next) => {
+  const { firstName, lastName, tempPassword, newPassword } = req.body;
+
+  Patient.findOne({ firstName: firstName, lastName: lastName })
+  bcrypt.compare(tempPassword, patient.password, (error, result) => {
+    if (error) return next(error);
+    if (result === true) {
+      bcrypt.hash(newPassword, 10, (error, hash) => {
+        Object.assign(req.body, { password: hash });
+    })
+    }
+  })
+};
+
 module.exports = userController;

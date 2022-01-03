@@ -9,7 +9,7 @@ class Datalist extends Component {
         const list= this.props.list;
         return (
             <div>
-                
+                {list}
             </div>
         )
     }
