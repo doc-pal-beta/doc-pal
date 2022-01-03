@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+const cors = require("cors")
 //controllers
 const userController = require("./controllers/userController");
 //parsers

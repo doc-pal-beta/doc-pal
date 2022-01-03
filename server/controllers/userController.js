@@ -72,14 +72,6 @@ userController.createDoctor = (req, res, next) => {
   });
 };
 userController.createPatient = (req, res, next) => {
-<<<<<<< HEAD
-  //creating temporary password when creating a new patient
-  const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const passwordLength = 6;
-  let tempPassword = ' ';
-  for ( let i = 0; i < passwordLength; i++ ) {
-    tempPassword += characters.charAt(Math.floor(Math.random() * characters.length));
-=======
   const { firstName, lastName, dateOfBirth } = req.body;
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -90,7 +82,6 @@ userController.createPatient = (req, res, next) => {
     tempPassword += characters.charAt(
       Math.floor(Math.random() * characters.length)
     );
->>>>>>> 598659b28a24ef6ab785c11c51a606c5a9171672
   }
   bcrypt.hash(tempPassword, 10, (error, hash) => {
     Object.assign(req.body, { password: hash });
@@ -232,13 +223,8 @@ userController.doctorLogin = (req, res, next) => {
 
 userController.patientLogin = (req, res, next) => {
   const { firstName, lastName, password } = req.body;
-<<<<<<< HEAD
-  Patient.findOne({ firstName: firstName, lastName: lastName })
-    .populate("visits")
-=======
   Patient.findOne({ firstName, lastName })
     .populate(["visits", 'primaryDoctor'])
->>>>>>> 598659b28a24ef6ab785c11c51a606c5a9171672
     .exec((error, patient) => {
         if (error) return next(error);
         if (password === patient.password) {
@@ -252,10 +238,15 @@ userController.patientLogin = (req, res, next) => {
       });
     };
 
-userController.changePassword = (req, res, next) => {
-  const { firstName, lastName, password } = req.body;
-  //need to figure out how to change to new password here
-  Patient.findOneAndUpdate({firstName: firstName, lastName: lastName, password: password }, { password: password})
-}
+    userController.changePassword = (req, res, next) => {
+      const { firstName, lastName, password } = req.body;
+    
+      bcrypt.hash(password, 10, (error, hash) => {
+        Object.assign(req.body, { password: hash });
+    
+        Patient.findOneAndUpdate({firstName: firstName, lastName: lastName, password: password }, { password: password});
+        next();
+      })
+    };
 
 module.exports = userController;

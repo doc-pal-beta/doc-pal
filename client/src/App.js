@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 const App = () => {
 
   const [userDetails, setUserDetails] = useState({userType: false, loggedIn: false, userData:false})
-  console.log('The global state is', userDetails)
+
 
   return (
     <Router>
