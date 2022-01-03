@@ -8,6 +8,7 @@ const userController = require("./controllers/userController");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
+app.use(cookieParser());
 const whitelist = ["http://localhost:8080", "http://www.localhost:8080"];
 
 const corsOptions = {
@@ -20,10 +21,9 @@ const corsOptions = {
     }
   },
 };
-
 app.use(cors(corsOptions));
+
 app.use(express.json());
-app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/authenticate", userController.authenticate, (req, res) => {
@@ -85,6 +85,7 @@ app.post(
   userController.startSession,
   (req, res) => {
     res.status(200).json({
+      userType: 'doctor',
       currentUser: res.locals.currentUser,
       loggedIn: res.locals.loggedIn,
     });
@@ -97,6 +98,7 @@ app.post(
   userController.startSession,
   (req, res) => {
     res.status(200).json({
+      userType: 'patient',
       loggedIn: res.locals.loggedIn,
       currentUser: res.locals.currentUser,
     });
