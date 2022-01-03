@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import NewVisit from './NewVisit';
 import PatientCard from './PatientCard';
 
 
@@ -63,6 +64,7 @@ class DoctorHome extends Component {
         <button onClick = {() => this.handleBackClick()}>Back</button>
         <button onClick>Add Visit</button>
         <button onClick = {() => this.handleNextClick()}>Next</button>
+        <NewVisit></NewVisit>
       </div>
     )
   }
