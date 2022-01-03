@@ -22,13 +22,14 @@ const PatientHome = ({ userDetails }) => {
       <DatailVisitCard visit_Data={userDetails.userData.visits[i]} key={i} />
     );
   }
+
+  console.log("passsed in data is", userDetails.userData)
   
   return (
     <div>
       
         <h1>Welcome {userDetails.userData.firstName}</h1>
-        <button className="btn">Profile
-        </button>
+        <button className="btn">Profile</button>
         <Datalist patientData={userDetails.userData}/>
         {/* <button className="btn" onClick={handleChangePass}>Change Password</button> */}
         <ToHomePage />

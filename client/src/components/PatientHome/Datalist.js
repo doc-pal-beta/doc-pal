@@ -5,7 +5,8 @@ class Datalist extends Component {
         super(props);
     }
     render() {
-        const list= this.props.list;
+        const list= this.props.patientData;
+        console.log('Passed in Data are', list)
         return (
             <div className='data_list'>
                 <p>First Name: {list.firstName}</p>
