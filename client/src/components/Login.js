@@ -17,22 +17,24 @@ function Login() {
         setFormErrors(validate(details));
         setSubmit(true);
     }    
-
-    useEffect(()=>{
+    const id = '61d1f5ffaf426ddc1a0f4f91';
+    useEffect((id)=>{
         
         if(Object.keys(formErrors).length===0 & isSubmit){
             console.log(details);
             //fetch data from patient side
             if(details.member==='patient'){
-                fetch('http://localhost:3000/patients')
+                fetch(`http://localhost:3000/patient/:${id}`)
                 .then(res => res.json())
-                .then(data => setDetails({data}));
+                .then(data => setDetails({data}))
+                .catch(err => console.log('Request Failed', err))
             }
             //fetch data from doctor side
             if(details.member==='doctor'){
-                fetch('http://localhost:3000/doctors/:')
+                fetch(`http://localhost:3000/doctor/${id}`)
                 .then(res => res.json())
-                .then(data => setDetails({data}));
+                .then(data => setDetails({data}))
+                .catch(err => console.log('Request Failed', err))
             }
             //need to match data with fetched data, if ok, then render to another page
         }        
@@ -40,7 +42,6 @@ function Login() {
 
     const validate = (values) =>{
         const errors={};
-        const regex = /^[^s@]+@[^\s@]+\.[^\s@]{2,}$/i;
         if(!values.member){
             errors.member="Please choose either patient or doctor"
         }

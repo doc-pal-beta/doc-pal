@@ -71,7 +71,18 @@ const config = {
       templateContent: ({ htmlWebpackPlugin }) => '<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>' + htmlWebpackPlugin.options.title + '</title></head><body><div id=\"app\"></div></body></html>',
       filename: './client/src/index.html',
     }),
-  ]
+  ],
+
+  devServer: {
+    proxy: {
+      '/': 'http://localhost:3000',
+    },
+    static: {
+      directory: path.join(__dirname),
+    },
+    compress: true,
+    port: 8080,
+  },
 };
 
 module.exports = config;
