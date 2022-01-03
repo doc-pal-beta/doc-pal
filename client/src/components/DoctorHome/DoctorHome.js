@@ -1,14 +1,16 @@
 import React, {useState, useEffect} from 'react'
 
-function DoctorHome() {
-    fetch('/doctors')
+const DoctorHome = () => {
+  fetch('http://localhost:3000/doctors')
     .then(response => response.json())
     .then(data => console.log(data));
-    return (
-        <div className='container'>
-          <h1>Hello</h1>
-        </div>
-    )
+
+
+  return (
+      <div className='container'>
+        <h1>Hello</h1>
+      </div>
+  )
 }
 
 export default DoctorHome;
