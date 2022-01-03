@@ -20,14 +20,7 @@ const App = () => {
         <Route path="/doctor" element={<DoctorHome userDetails={userDetails}/>} />
       </Routes>
     </Router>
-
   );
 };
 
 export default App;
-
-    // <h1 className="App">
-    //   {/* <Login/> */}
-    //   {/* <SignUp/> */}
-    //   {/* <Patient_Info /> */}
-    // </h1>
