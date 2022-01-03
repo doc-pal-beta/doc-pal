@@ -6,6 +6,7 @@ const config = {
   entry: ["react-hot-loader/patch", "./client/src/index.js"],
   output: {
     path: path.resolve(__dirname, "dist"),
+    publicPath: '/',
     filename: "bundle.js",
   },
   mode: "development",
@@ -47,17 +48,11 @@ const config = {
     ],
   },
   devServer: {
+    historyApiFallback: true,
     static: {
       directory: path.join(__dirname, "dist"),
     },
     port: 8080,
-    // proxy: {
-    //   '/api': {
-    //       target: 'http://localhost:3000',
-    //       pathRewrite: { '^/api': '' },
-    //       secure: false
-    //   }
-    // },
   },
 
   plugins: [
@@ -70,16 +65,7 @@ const config = {
     }),
   ],
 
-  // devServer: {
-  //   proxy: {
-  //     '/': 'http://localhost:3000',
-  //   },
-  //   static: {
-  //     directory: path.join(__dirname),
-  //   },
-  //   compress: true,
-  //   port: 8080,
-  // },
+
 };
 
 module.exports = config;
