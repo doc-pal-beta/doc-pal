@@ -156,6 +156,13 @@ userController.startSession = (req, res, next) => {
 //Check if user has a session storage JWT
 userController.authenticate = async (req, res, next) => {
   res.locals.loggedIn = false;
+
+  if(req.cookies.JWT === undefined){
+    res.locals.userType = false
+    res.locals.currentUser = false
+    next()
+  }
+
   const token = req.cookies.JWT;
   const privateKey = fs.readFileSync(
     path.join(__dirname, "./privatekey.json"),
