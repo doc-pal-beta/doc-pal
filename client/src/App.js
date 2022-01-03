@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { hot } from "react-hot-loader/root";
 import DoctorHome from "./components/DoctorHome/DoctorHome";
+import NewPatient from "./components/DoctorHome/NewPatient";
 import Login from "./components/Landing/Login";
 import SignUp from "./components/Landing/SignUp";
 import PatientHome from "./components/PatientHome/PatientHome";
@@ -28,14 +29,9 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Login props={{ setUserDetails }} />} exact />
         <Route path="/signup" element={<SignUp />} />
-        <Route
-          path="/patient"
-          element={<PatientHome userDetails={userDetails} setUserDetails={setUserDetails} />}
-        />
-        <Route
-          path="/doctor"
-          element={<DoctorHome userDetails={userDetails} setUserDetails={setUserDetails}/>}
-        />
+        <Route path="/patient" element={<PatientHome userDetails={userDetails}/>} />
+        <Route path="/doctor" element={<DoctorHome userDetails={userDetails}/>} />
+        <Route path = "/new-patient" element = {<NewPatient userDetails= {userDetails}/>}/>
       </Routes>
     </Router>
   );
