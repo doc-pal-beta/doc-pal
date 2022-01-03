@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import { hot } from 'react-hot-loader/root';
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
+import Patient_Info from "./components/Patient/Patient_Info";
 
 class App extends React.Component {
   render() {
@@ -11,7 +12,8 @@ class App extends React.Component {
       <>
         <h1 className="App">
           {/* <Login/> */}
-          <SignUp/>
+          {/* <SignUp/> */}
+          <Patient_Info />
         </h1>
       </>
     );
