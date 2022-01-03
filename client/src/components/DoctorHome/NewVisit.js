@@ -1,25 +1,5 @@
 import React, {Component} from 'react'
 
-// const visitSchema = new Schema({
-//   date: { type: String, required: true }, // MM/DD/YYYY
-//   //SOAP NOTE: S:subjective complaints, O:objective observations, A:assessment/diagnosis, P:plan
-//   subjective: String,
-//   objective: String,
-//   assessment: String,
-//   plan: String,
-//   prescription: String,
-//   homeCare: String,
-//   patientId: {
-//     type: Schema.Types.ObjectId,
-//     ref: "patient",
-//   },
-//   doctorId: {
-//     type: Schema.Types.ObjectId,
-//     ref: "patient",
-//   },
-// });
-
-
 class NewVisit extends Component {
   handleSubmitClick () {
     const doctorId = this.props.doctor._id
