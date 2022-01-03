@@ -125,9 +125,9 @@ app.put(
     res.status(200).json(res.locals.doctor);
   }
 );
-// app.put("/patients/changePass", userController.changePass, (req, res) => {
-//   res.status(200)
-// });
+app.put("/patients/changePass", userController.changePassword, (req, res) => {
+  res.status(200).json(res.locals.changePass)
+});
 
 app.use("*", (req, res) => {
   res.status(404).send("Page not Found");

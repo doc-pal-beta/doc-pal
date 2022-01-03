@@ -1,8 +1,12 @@
 import React, { useState, UseEffect } from "react";
 import { useEffect } from "react/cjs/react.development";
-import Datalist from "./Datalist";
 import DatailVisitCard from "./DatailVisitCard";
+import ToHomePage from "../DoctorHome/LogOutButton";
+import ChangePass from "./changePass";
+import { useNavigate } from "react-router-dom";
+
 const PatientHome = ({ userDetails }) => {
+  const navigate = useNavigate();
   const { userType, userData, loggedIn } = userDetails;
 
 
@@ -23,23 +27,21 @@ const PatientHome = ({ userDetails }) => {
   
   console.log('User data', userDetails);
 
+    const newData=[];
+    for(let i=0; i< visit_Data.length; i++){
+      newData.push(<DatailVisitCard visit_Data={visit_Data[i]} key={visit_Data.id} />)
+    }
+  
   return (
     <div>
-      
-        <h1>Welcome {userData.firstname}</h1>
+      <button className="btn" onClick={handleChangePass}>Change Password</button>
+      <ToHomePage />
+        <h1>Welcome {userData.firstName}</h1>
         {newData}
     
-      <button
-        className="btn"
-        onClick={(event) => (window.location.href = "/changePass")}
-      >
-        Change Password
-      </button>
-      <button className="btn" onClick={(event) => (window.location.href = "/")}>
-        Sign Out
-      </button>      
     </div>
   );
 };
 
+//test
 export default PatientHome;
