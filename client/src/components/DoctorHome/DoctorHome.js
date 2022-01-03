@@ -8,7 +8,8 @@ class DoctorHome extends Component {
   constructor(props){
     super(props);
     this.state={
-      currentPatientIndex: 0
+      currentPatientIndex: 0,
+      visits: 0
     };
   }
   handleNextClick() {
@@ -38,7 +39,11 @@ class DoctorHome extends Component {
       }
     }
   }
-  
+  handleVisitClick () {
+    this.setState({
+      visits: 1
+    })
+  }
   createPatientCard(currentPatient) {
     if(!currentPatient){return <h1>No Patients Yet</h1>}
     else{return <PatientCard 
@@ -55,6 +60,10 @@ class DoctorHome extends Component {
     let currentPatient = patients[this.state.currentPatientIndex]
     const patient = this.createPatientCard(currentPatient)
 
+    const visits = [];
+    for(let i = 0; i < this.state.visits; i++){
+      visits.push(<NewVisit key = {i} doctor = {doctor} patient = {currentPatient}></NewVisit>)
+    }
     return (
       <div className='DoctorHome'>
         <h1>Hello Doctor {doctor.firstName} {doctor.lastName}</h1>
@@ -62,9 +71,9 @@ class DoctorHome extends Component {
         <button onClick = {() => this.handleSearchClick()}>Search Patient</button>
         {patient}
         <button onClick = {() => this.handleBackClick()}>Back</button>
-        <button onClick>Add Visit</button>
+        <button onClick = {() => this.handleVisitClick()}>Add Visit</button>
         <button onClick = {() => this.handleNextClick()}>Next</button>
-        <NewVisit></NewVisit>
+        {visits}
       </div>
     )
   }
