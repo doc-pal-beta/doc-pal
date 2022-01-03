@@ -1,31 +1,29 @@
-import React, { Component } from 'react'
+import React, { useState, UseEffect } from 'react'
+import { useEffect } from 'react/cjs/react.development';
 import Datalist from './Datalist';
 
-class Patient_Info extends Component {
-    constructor(){
-        super();
-        this.state={patient_data:[]};
-    }
+const PatientInfo = (props) => {
+    const [patientData, setPatientData] = useState([])
 
     //fetch Data
-    componentDidMount(){
+    useEffect(() => {
         fetch('http://localhost:3000/patients')
         .then(res => res.json())
-        .then(data => this.setState({patient_data: data}))
-    }
+        .then((data) => {
+            setPatientData(data)
+        })
+    }, [])
 
-    render() {
-        console.log('The data are', this.state.patient_data);
-        const datalist = [];
-        for(let i=0; i<this.state.patient_data.length; i++){
-            datalist.push(<Datalist list={this.state.patient_data[i]} key={this.state.patient_data[i]._id}/>)
-        }
-        return (
-            <div>
-                {datalist}
-            </div>
-        )
+    console.log('The data is', patientData);
+    const datalist = [];
+    for(let i=0; i<patientData.length; i++){
+        datalist.push(<Datalist list={patientData[i]} key={patientData[i]._id}/>)
     }
+    return (
+        <div>
+            {datalist}
+        </div>
+    )
 }
 
-export default Patient_Info;
+export default PatientInfo;
