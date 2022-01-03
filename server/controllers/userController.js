@@ -71,11 +71,9 @@ userController.createDoctor = (req, res, next) => {
   });
 };
 userController.createPatient = (req, res, next) => {
-  // bcrypt.hash(req.body.password, 10, (error, hash) => {
-  //   Object.assign(req.body, { password: hash });
+  //creating temporary password when creating a new patient
   const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const passwordLength = 6;
-  
   let tempPassword = ' ';
   for ( let i = 0; i < passwordLength; i++ ) {
     tempPassword += characters.charAt(Math.floor(Math.random() * characters.length));

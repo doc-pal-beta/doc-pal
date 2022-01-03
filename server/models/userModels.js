@@ -17,7 +17,6 @@ const Schema = mongoose.Schema;
 const patientSchema = new Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  //temporaryPassword: { type: String },
   password: { type: String },
   dateOfBirth: { type: String, required: true }, // MM/DD/YYYY
   sex: String,
