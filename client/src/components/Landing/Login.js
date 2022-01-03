@@ -19,7 +19,6 @@ const Login = ({ props }) => {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setSubmit] = useState(false);
 
-
   return (
     <div className="container">
       <h2>Welcome to Doc-Pal</h2>
@@ -28,20 +27,17 @@ const Login = ({ props }) => {
         onSubmit={(e) => {
           e.preventDefault();
 
-          fetch(
-            `http://localhost:3000/patient/login`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                firstName: e.target[0].value,
-                lastName: e.target[1].value,
-                password: e.target[2].value,
-              }),
-            }
-          )
+          fetch(`http://localhost:3000/patient/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              firstName: e.target[0].value,
+              lastName: e.target[1].value,
+              password: e.target[2].value,
+            }),
+          })
             .then((response) => response.json())
             .then((data) => {
               setUserDetails({
@@ -49,11 +45,9 @@ const Login = ({ props }) => {
                 loggedIn: data.loggedIn,
                 userType: data.userType,
               });
-              if(data.loggedIn === true){
+              if (data.loggedIn === true) {
                 navigate("/patient");
-              } else (
-                alert('Log-In not recognized')
-              )
+              } else alert("Log-In not recognized");
             })
             .catch((error) => {
               console.error("Error:", error);
@@ -62,7 +56,6 @@ const Login = ({ props }) => {
       >
         <strong>Patient Log In</strong>
         <br />
-
         {/* <p className="error_msg">{formErrors.member}</p> */}
         <label htmlFor="firstName">First Name:</label>
         <input
@@ -73,7 +66,6 @@ const Login = ({ props }) => {
           autoComplete="off"
         ></input>
         <br />
-
         <label htmlFor="lastName">Last Name:</label>
         <input
           className="textbox"
@@ -83,7 +75,6 @@ const Login = ({ props }) => {
           autoComplete="off"
         ></input>
         <br />
-
         {/* <p className="error_msg">{formErrors.username}</p> */}
         <label htmlFor="password">Password:</label>
         <input
@@ -92,7 +83,6 @@ const Login = ({ props }) => {
           id="password"
           placeholder="Password"
         ></input>
-
         {/* <p className="error_msg">{formErrors.password}</p> */}
         <br />
         <button className="btn" value="login">
@@ -104,21 +94,17 @@ const Login = ({ props }) => {
         className="login"
         onSubmit={(e) => {
           e.preventDefault();
-
-          fetch(
-            `http://localhost:3000/doctor/login`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                firstName: e.target[0].value,
-                lastName: e.target[1].value,
-                password: e.target[2].value,
-              }),
-            }
-          )
+          fetch(`http://localhost:3000/doctor/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              firstName: e.target[0].value,
+              lastName: e.target[1].value,
+              password: e.target[2].value,
+            }),
+          })
             .then((response) => response.json())
             .then((data) => {
               setUserDetails({
@@ -126,17 +112,17 @@ const Login = ({ props }) => {
                 loggedIn: data.loggedIn,
                 userType: data.userType,
               });
-              if (data.loggedIn === true){
+              if (data.loggedIn === true) {
                 navigate("/doctor");
-              } else (
-                alert('Log-In not recognized')
-              )
+              } else alert("Log-In not recognized");
             })
             .catch((error) => {
               console.error("Error:", error);
             });
         }}
-      ><br /><br />
+      >
+        <br />
+        <br />
         <strong>Doctor Log In</strong>
         <br />
 

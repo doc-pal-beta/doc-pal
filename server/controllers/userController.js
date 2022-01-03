@@ -66,6 +66,7 @@ userController.createDoctor = (req, res, next) => {
     Doctor.create(req.body, (error, success) => {
       if (error) res.sendStatus(400).json(error);
       res.locals.newDoctor = success;
+      res.locals.loggedIn = true
       return next();
     });
   });
@@ -225,8 +226,9 @@ userController.patientLogin = (req, res, next) => {
   Patient.findOne({ firstName, lastName })
     .populate(["visits", 'primaryDoctor'])
     .exec((error, patient) => {
+      bcrypt.compare(password, patient.password, (error, result) => {
         if (error) return next(error);
-        if (password === patient.password) {
+        if (result === true) {
           res.locals.currentUser = patient;
           res.locals.loggedIn = true;
           return next();
@@ -235,17 +237,7 @@ userController.patientLogin = (req, res, next) => {
           return next();
         }
       });
-    };
-
-    userController.changePassword = (req, res, next) => {
-      const { firstName, lastName, password } = req.body;
-    
-      bcrypt.hash(password, 10, (error, hash) => {
-        Object.assign(req.body, { password: hash });
-    
-        Patient.findOneAndUpdate({firstName: firstName, lastName: lastName, password: password }, { password: password});
-        next();
-      })
-    };
+    });
+};
 
 module.exports = userController;
