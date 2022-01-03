@@ -210,12 +210,11 @@ userController.doctorLogin = (req, res, next) => {
 
 userController.patientLogin = (req, res, next) => {
   const { firstName, lastName, password } = req.body;
-  Patient.findOne({ firstName, lastName })
+  Patient.findOne({ firstName: firstName, lastName: lastName })
     .populate("visits")
     .exec((error, patient) => {
-      bcrypt.compare(password, patient.password, (error, result) => {
         if (error) return next(error);
-        if (result === true) {
+        if (password === patient.password) {
           res.locals.currentUser = patient;
           res.locals.loggedIn = true;
           return next();
@@ -224,8 +223,13 @@ userController.patientLogin = (req, res, next) => {
           return next();
         }
       });
-    });
-};
+    };
+
+userController.changePassword = (req, res, next) => {
+  const { firstName, lastName, password } = req.body;
+  //need to figure out how to change to new password here
+  Patient.findOneAndUpdate({firstName: firstName, lastName: lastName, password: password }, { password: password})
+}
 
 
 module.exports = userController;
