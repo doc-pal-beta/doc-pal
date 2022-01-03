@@ -99,7 +99,10 @@ userController.createPatient = (req, res, next) => {
 
 userController.createVisit = (req, res, next) => {
   Visit.create(req.body, (error, success) => {
-    if (error) next(error);
+    if (error){ 
+      console.log(error)
+      next(error)
+    };
     res.locals.newVisit = success;
     next();
   });

@@ -14,12 +14,18 @@ class DoctorHome extends Component {
   }
   handleNextClick() {
     if(this.state.currentPatientIndex < this.props.userDetails.userData.patients.length - 1){
-      this.setState({currentPatientIndex: this.state.currentPatientIndex + 1})
+      this.setState({
+        currentPatientIndex: this.state.currentPatientIndex + 1,
+        visits: 0
+      })
     }
   }
   handleBackClick() {
     if(this.state.currentPatientIndex > 0){
-      this.setState({currentPatientIndex: this.state.currentPatientIndex - 1})
+      this.setState({
+        currentPatientIndex: this.state.currentPatientIndex - 1,
+        visits: 0
+      })
     }
   }
   handleSearchClick() {
@@ -33,7 +39,8 @@ class DoctorHome extends Component {
       const lastName = patients[i].lastName
       if(firstName === searchedPatient || lastName === searchedPatient || fullName == searchedPatient){
         this.setState({
-          currentPatientIndex: i
+          currentPatientIndex: i,
+          visits: 0
         })
         return
       }
