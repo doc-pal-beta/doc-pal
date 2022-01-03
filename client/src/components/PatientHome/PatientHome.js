@@ -14,7 +14,10 @@ const PatientHome = ({ userDetails }) => {
   
   return (
     <div>
+      <button className="btn" onClick={event =>  window.location.href='/changePass'}>Change Password</button>
+      <button className="btn" onClick={event =>  window.location.href='/'}>Sign Out</button>
         <h1>Welcome {userData.firstName}</h1>
+
     </div>
     )
 };
