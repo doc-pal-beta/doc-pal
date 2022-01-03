@@ -82,3 +82,22 @@ h2{
   font-weight: lighter;
   color: $primary-color;
 }
+
+.visitCard{
+  display: flex;
+  width: 50%;
+  height: 50%;
+  margin: 8px 0;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  display: inline-block;
+  border: 5px solid c;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  border-radius: .25rem;
+  box-shadow: 0 0 5px 2px rgb(71, 64, 64);
+  background-color: ivory;
+  cursor: pointer;
+}
