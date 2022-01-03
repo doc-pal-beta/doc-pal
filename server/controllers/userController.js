@@ -66,12 +66,12 @@ userController.createDoctor = (req, res, next) => {
     Doctor.create(req.body, (error, success) => {
       if (error) res.sendStatus(400).json(error);
       res.locals.newDoctor = success;
-      res.locals.loggedIn = true
       return next();
     });
   });
 };
 userController.createPatient = (req, res, next) => {
+<<<<<<< HEAD
   const { firstName, lastName, dateOfBirth } = req.body;
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -82,6 +82,14 @@ userController.createPatient = (req, res, next) => {
     tempPassword += characters.charAt(
       Math.floor(Math.random() * characters.length)
     );
+=======
+  //creating temporary password when creating a new patient
+  const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const passwordLength = 6;
+  let tempPassword = ' ';
+  for ( let i = 0; i < passwordLength; i++ ) {
+    tempPassword += characters.charAt(Math.floor(Math.random() * characters.length));
+>>>>>>> 4d6b5eb675e7a4f7b59d78a015a9d6dbf9c6164c
   }
   bcrypt.hash(tempPassword, 10, (error, hash) => {
     Object.assign(req.body, { password: hash });
@@ -223,8 +231,13 @@ userController.doctorLogin = (req, res, next) => {
 
 userController.patientLogin = (req, res, next) => {
   const { firstName, lastName, password } = req.body;
+<<<<<<< HEAD
   Patient.findOne({ firstName, lastName })
     .populate(["visits", 'primaryDoctor'])
+=======
+  Patient.findOne({ firstName: firstName, lastName: lastName })
+    .populate("visits")
+>>>>>>> 4d6b5eb675e7a4f7b59d78a015a9d6dbf9c6164c
     .exec((error, patient) => {
         if (error) return next(error);
         if (password === patient.password) {
