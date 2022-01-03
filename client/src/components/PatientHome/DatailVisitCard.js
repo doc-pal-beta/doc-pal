@@ -11,14 +11,13 @@ class DatailVisitCard extends Component {
         return (
             <div className='visitCard'> 
                 <div>
+                    <p>Assessment: {this.props.visit_Data.assessment}</p>
                     <p>Date: {this.props.visit_Data.date}</p>
-                    <p>Subjective: {this.props.visit_Data.subjective}</p>
-                    <p>objective: {this.props.visit_Data.objective}</p>
-                    <p>assessment: {this.props.visit_Data.assessment}</p>
-                    <p>plan: {this.props.visit_Data.plan}</p>
-                    <p>prescription: {this.props.visit_Data.prescription}</p>
-                    <p>homeCare: {this.props.visit_Data.homeCare}</p>
-                    <p>patientId: {this.props.visit_Data.patientId}</p>
+                    <p>Objective: {this.props.visit_Data.objective}</p>
+                    <p>Plan: {this.props.visit_Data.plan}</p>
+                    <p>Prescription: {this.props.visit_Data.prescription}</p>
+                    <p>HomeCare: {this.props.visit_Data.homeCare}</p>
+                    <br></br>
                 </div>
                 
             </div>
