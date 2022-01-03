@@ -1,29 +1,22 @@
-import React, { useState, UseEffect } from 'react'
-import { useEffect } from 'react/cjs/react.development';
-import Datalist from './Datalist';
+import React, { useState, UseEffect } from "react";
+import { useEffect } from "react/cjs/react.development";
+import Datalist from "./Datalist";
 
-const PatientInfo = (props) => {
-    const [patientData, setPatientData] = useState([])
+const PatientHome = ({ userDetails }) => {
+  const { userType, userData, loggedIn } = userDetails;
 
-    //fetch Data
+  console.log("The patients data is", userData);
+
     useEffect(() => {
-        fetch('http://localhost:3000/patients')
-        .then(res => res.json())
-        .then((data) => {
-            setPatientData(data)
-        })
+        // check session token to make sure user is logged in.
     }, [])
 
-    console.log('The data is', patientData);
-    const datalist = [];
-    for(let i=0; i<patientData.length; i++){
-        datalist.push(<Datalist list={patientData[i]} key={patientData[i]._id}/>)
-    }
-    return (
-        <div>
-            {datalist}
-        </div>
+  
+  return (
+    <div>
+        <h1>Welcome {userData.firstName}</h1>
+    </div>
     )
-}
+};
 
-export default PatientInfo;
+export default PatientHome;
