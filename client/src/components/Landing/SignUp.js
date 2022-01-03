@@ -60,7 +60,8 @@ function SignUp() {
     return (
         <div className='container'>
             <h2></h2>
-            <form className='SignUp' onSubmit={submitHandler}>Create Account
+            <form className='SignUp' onSubmit={submitHandler}>
+                <strong>Create a Doctor Account</strong>
                 <br/>
                 <p className='error_msg'>{formErrors.username}</p>  
                 <label className='label'> Username:

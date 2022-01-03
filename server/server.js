@@ -55,8 +55,8 @@ app.get("/visits", userController.getVisits, (req, res) => {
 });
 
 //POST
-app.post("/doctors", userController.createDoctor, (req, res) => {
-  res.status(200).json(res.locals.newDoctor);
+app.post("/doctors", userController.createDoctor, userController.startSession, (req, res) => {
+  res.status(200).json({newDoctor: res.locals.newDoctor, loggedIn: res.locals.loggedIn});
 });
 app.post(
   "/patients",

@@ -66,6 +66,7 @@ userController.createDoctor = (req, res, next) => {
     Doctor.create(req.body, (error, success) => {
       if (error) res.sendStatus(400).json(error);
       res.locals.newDoctor = success;
+      res.locals.loggedIn = true
       return next();
     });
   });
