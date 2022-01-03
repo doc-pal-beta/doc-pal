@@ -58,29 +58,22 @@ function SignUp() {
     
     return (
         <div className='container'>
-            <h2></h2>
-            <form className='SignUp' onSubmit={submitHandler}>
+            <h2>Welcome To Doc-Pal</h2>
+            <form className='login' onSubmit={submitHandler}>
                 <strong>Create a Doctor Account</strong>
                 <br/>
                 <p className='error_msg'>{formErrors.username}</p>  
-                <label className='label'> Username:
-                    <input className='textbox' type='text' name='username' placeholder='Enter Username' onChange={handleChange}></input>
-                </label>
-                <br />
+                <label>Username</label>
+                <input className='loginInput' type='text' name='username' placeholder='Enter Username' onChange={handleChange}></input>
                 <p className='error_msg'>{formErrors.email}</p>
-                <label className='label'> Email :
-                    <input className='textbox' type='text' name='email' placeholder='Enter Email' onChange={handleChange} value={details.email}></input>
-                </label>
-                <br />
+                <label className='label'> Email</label>
+                <input className='loginInput' type='text' name='email' placeholder='Enter Email' onChange={handleChange} value={details.email}></input>
                 <p className='error_msg'>{formErrors.password}</p>
-                <label className='label'> Password:
-                    <input className='textbox' type='password' name='password' placeholder='Enter Password' onChange={handleChange} value={details.password}></input>
-                </label>
-                <br />
+                <label className='label'> Password</label>
+                <input className='loginInput' type='password' name='password' placeholder='Enter Password' onChange={handleChange} value={details.password}></input>
                 <p className='error_msg'>{formErrors.password2}</p>
-                <label className='label'> Password:
-                    <input className='textbox' type='password' name='password2' placeholder='Re-Enter Password' onChange={handleChange} value={details.password2}></input>
-                </label>
+                <label className='label'> Password</label>
+                <input className='loginInput' type='password' name='password2' placeholder='Re-Enter Password' onChange={handleChange} value={details.password2}></input>
                 <br />
                 <div className='button'>
                     <button className='btn' value='SignUp'>SignUp</button>
