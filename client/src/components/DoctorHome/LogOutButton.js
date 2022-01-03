@@ -9,14 +9,14 @@ import React from 'react';
 
 const ToHomePage = () => {
   const navigate = useNavigate();
-  const handleClick = () => navigate('/');
-
-  fetch('http://localhost:3000/logout',{
+  const handleClick = () => {
+    fetch('http://localhost:3000/logout',{
     credentials: 'include'
-  })
-  .then(response => response.json())
-  .then(data => console.log(data));
-
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .then(navigate('/'));
+  }
   return (
     <button type="button" onClick={handleClick}>
       Log Out 
