@@ -17,15 +17,22 @@ const PatientHome = ({ userDetails }) => {
       });
   }, []);
 
+  console.log('Data to sort', visit_Data.date)
+
   const newData = [];
   for (let i = 0; i < visit_Data.length; i++) {
     newData.push(
       <DatailVisitCard visit_Data={visit_Data[i]} key={visit_Data.id} />
     );
   }
+  
 
   return (
     <div>
+      <>
+        <h1>Welcome {userData.firstname}</h1>
+        {newData}
+      </>
       <button
         className="btn"
         onClick={(event) => (window.location.href = "/changePass")}
@@ -34,9 +41,7 @@ const PatientHome = ({ userDetails }) => {
       </button>
       <button className="btn" onClick={(event) => (window.location.href = "/")}>
         Sign Out
-      </button>
-      <h1>Welcome {userData.firstName}</h1>
-      {newData}
+      </button>      
     </div>
   );
 };
