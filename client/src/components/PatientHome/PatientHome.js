@@ -15,7 +15,11 @@ const PatientHome = ({ userDetails }) => {
   return (
     <div>
         <h1>Welcome {userData.firstName}</h1>
+<<<<<<< HEAD
+      {newData}
+=======
         {newData}
+>>>>>>> dev
     </div>
     )
 };
