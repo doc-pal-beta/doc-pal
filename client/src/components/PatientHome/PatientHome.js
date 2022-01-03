@@ -2,7 +2,12 @@ import React, { useState, UseEffect } from "react";
 import { useEffect } from "react/cjs/react.development";
 import DatailVisitCard from "./DatailVisitCard";
 import Datalist from "./Datalist";
+import ToHomePage from "../DoctorHome/LogOutButton";
+import ChangePass from "./changePass";
+import { useNavigate } from "react-router-dom";
+
 const PatientHome = ({ userDetails }) => {
+  const navigate = useNavigate();
   const { userType, userData, loggedIn } = userDetails;
 
 
@@ -11,8 +16,6 @@ const PatientHome = ({ userDetails }) => {
   useEffect(() => {
     // check session token to make sure user is logged in.
   }, []);
-
-  console.log('')
 
   const newData = [];
   for (let i = 0; i < userDetails.userData.visits.length; i++) {
@@ -23,6 +26,10 @@ const PatientHome = ({ userDetails }) => {
   
   console.log('User data', userDetails.userData);
 
+  // const handleChangePass = (e) = {
+
+  // }
+  
   return (
     <div>
       
@@ -30,19 +37,14 @@ const PatientHome = ({ userDetails }) => {
         <button className="btn">Profile
         </button>
         <Datalist patientData={userDetails.userData}/>
+        {/* <button className="btn" onClick={handleChangePass}>Change Password</button> */}
+        <ToHomePage />
+        <h1>Welcome {userData.firstName}</h1>
         {newData}
     
-      <button
-        className="btn"
-        onClick={(event) => (window.location.href = "/changePass")}
-      >
-        Change Password
-      </button>
-      <button className="btn" onClick={(event) => (window.location.href = "/")}>
-        Sign Out
-      </button>      
     </div>
   );
 };
 
+//test
 export default PatientHome;
