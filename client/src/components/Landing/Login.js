@@ -19,53 +19,6 @@ const Login = ({ props }) => {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setSubmit] = useState(false);
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setDetails({ ...details, [name]: value });
-  // };
-
-  // const submitHandler = (e) => {
-  //   e.preventDefault();
-  //   setFormErrors(validate(details));
-  //   setSubmit(true);
-  // };
-
-  const id = "61d1f5ffaf426ddc1a0f4f91";
-
-  useEffect((id) => {
-    if ((Object.keys(formErrors).length === 0) & isSubmit) {
-      console.log(details);
-      //fetch data from patient side
-      if (details.member === "patient") {
-        fetch(`http://localhost:3000/patient/:${id}`)
-          .then((res) => res.json())
-          .then((data) => setDetails({ data }))
-          .catch((err) => console.log("Request Failed", err));
-      }
-      //fetch data from doctor side
-      if (details.member === "doctor") {
-        fetch(`http://localhost:3000/doctor/${id}`)
-          .then((res) => res.json())
-          .then((data) => setDetails({ data }))
-          .catch((err) => console.log("Request Failed", err));
-      }
-      //need to match data with fetched data, if ok, then render to another page
-    }
-  });
-
-  const validate = (values) => {
-    const errors = {};
-    if (!values.member) {
-      errors.member = "Please choose either patient or doctor";
-    }
-    if (!values.username) {
-      errors.username = "Username is required";
-    }
-    if (!values.password) {
-      errors.password = "Password is required";
-    }
-    return errors;
-  };
 
   return (
     <div className="container">
@@ -74,19 +27,18 @@ const Login = ({ props }) => {
         className="login"
         onSubmit={(e) => {
           e.preventDefault();
-          console.log(e.target[0].selectedOptions[0].value);
 
           fetch(
-            `http://localhost:3000/${e.target[0].selectedOptions[0].value}/login`,
+            `http://localhost:3000/patient/login`,
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                firstName: e.target[1].value,
-                lastName: e.target[2].value,
-                password: e.target[3].value,
+                firstName: e.target[0].value,
+                lastName: e.target[1].value,
+                password: e.target[2].value,
               }),
             }
           )
@@ -97,10 +49,8 @@ const Login = ({ props }) => {
                 loggedIn: data.loggedIn,
                 userType: data.userType,
               });
-              if(data.loggedIn === true && data.userType === 'patient'){
+              if(data.loggedIn === true){
                 navigate("/patient");
-              } else if (data.loggedIn === true && data.userType === 'doctor'){
-                navigate("/doctor");
               } else (
                 alert('Log-In not recognized')
               )
@@ -110,18 +60,7 @@ const Login = ({ props }) => {
             });
         }}
       >
-        <label>Log In As:</label>
-        <select
-          className="drop_down_btn"
-          name="userType"
-          defaultValue="default"
-        >
-          <option value="default" disabled>
-            Choose Member
-          </option>
-          <option value="patient">Patient</option>
-          <option value="doctor">Doctor</option>
-        </select>
+        <strong>Patient Log In</strong>
         <br />
 
         {/* <p className="error_msg">{formErrors.member}</p> */}
@@ -159,8 +98,85 @@ const Login = ({ props }) => {
         <button className="btn" value="login">
           LogIn
         </button>
+        Not a Member? Ask your Doctor about Doc-Pal!
+      </form>
+      <form
+        className="login"
+        onSubmit={(e) => {
+          e.preventDefault();
+          console.log(e.target[0].selectedOptions[0].value);
+
+          fetch(
+            `http://localhost:3000/doctor/login`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                firstName: e.target[0].value,
+                lastName: e.target[1].value,
+                password: e.target[2].value,
+              }),
+            }
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              setUserDetails({
+                userData: data.currentUser,
+                loggedIn: data.loggedIn,
+                userType: data.userType,
+              });
+              if (data.loggedIn === true){
+                navigate("/doctor");
+              } else (
+                alert('Log-In not recognized')
+              )
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        }}
+      ><br /><br />
+        <strong>Doctor Log In</strong>
         <br />
-        <Link to="/signup">Not a Member? Sign Up Here</Link>
+
+        {/* <p className="error_msg">{formErrors.member}</p> */}
+        <label htmlFor="doc-firstName">First Name:</label>
+        <input
+          className="textbox"
+          type="text"
+          id="doc-firstName"
+          placeholder="First Name"
+          autoComplete="off"
+        ></input>
+        <br />
+
+        <label htmlFor="doc-lastName">Last Name:</label>
+        <input
+          className="textbox"
+          type="text"
+          id="doc-lastName"
+          placeholder="Last Name"
+          autoComplete="off"
+        ></input>
+        <br />
+
+        {/* <p className="error_msg">{formErrors.username}</p> */}
+        <label htmlFor="doc-password">Password:</label>
+        <input
+          type="password"
+          className="textbox"
+          id="doc-password"
+          placeholder="Password"
+        ></input>
+
+        {/* <p className="error_msg">{formErrors.password}</p> */}
+        <br />
+        <button className="btn" value="login">
+          LogIn
+        </button>
+        <Link to="/signup">Not Regeistered with Doc-Pal? Sign Up Today!</Link>
       </form>
     </div>
   );
