@@ -154,8 +154,6 @@ const Login = ({ props }) => {
           placeholder="First Name"
           autoComplete="off"
         ></input>
-        <br />
-
         <label htmlFor="doc-lastName">Last Name:</label>
         <input
           className="loginInput"
@@ -164,8 +162,6 @@ const Login = ({ props }) => {
           placeholder="Last Name"
           autoComplete="off"
         ></input>
-        <br />
-
         {/* <p className="error_msg">{formErrors.username}</p> */}
         <label htmlFor="doc-password">Password:</label>
         <input
@@ -174,9 +170,9 @@ const Login = ({ props }) => {
           id="doc-password"
           placeholder="Password"
         ></input>
+        <br />
 
         {/* <p className="error_msg">{formErrors.password}</p> */}
-        <br />
         <button className="btn" value="login">
           Log In
         </button>

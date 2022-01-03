@@ -26,8 +26,7 @@ const PatientHome = ({ userDetails }) => {
   }
   
   console.log('User data', userDetails);
-
-    const newData=[];
+  newData = []
     for(let i=0; i< visit_Data.length; i++){
       newData.push(<DatailVisitCard visit_Data={visit_Data[i]} key={visit_Data.id} />)
     }
