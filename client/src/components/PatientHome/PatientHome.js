@@ -26,7 +26,7 @@ const PatientHome = ({ userDetails }) => {
   return (
     <div>
       
-        <h1>Welcome {userData.firstname}</h1>
+        <h1>Welcome {userDetails.userData.firstName}</h1>
         <button className="btn">Profile
         </button>
         <Datalist patientData={userDetails.userData}/>
