@@ -5,7 +5,7 @@ class Datalist extends Component {
         super(props);
     }
     render() {
-        console.log(this.props.list)
+        console.log('what is this data',this.props.list)
         const list= this.props.list;
         return (
             <div>
