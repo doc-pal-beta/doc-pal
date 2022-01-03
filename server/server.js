@@ -8,7 +8,6 @@ const userController = require("./controllers/userController");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
-app.use(cookieParser());
 const whitelist = ["http://localhost:8080", "http://www.localhost:8080"];
 
 const corsOptions = {
@@ -23,6 +22,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use(cookieParser());
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -31,10 +31,17 @@ app.get("/authenticate", userController.authenticate, (req, res) => {
   res.status(200).send({
     loggedIn: res.locals.loggedIn,
     userType: res.locals.userType,
-    currentUser: res.locals.currentUser,
+    userData: res.locals.userData,
   });
 });
 
+app.get("/logout", userController.logout, (req, res) => {
+  res.status(200).send({
+    loggedIn: false,
+    userType: "",
+    userData: false
+  });
+});
 //GET
 //get patients through query search or empty for all
 app.get("/patients", userController.getPatients, (req, res) => {
@@ -55,6 +62,9 @@ app.get("/doctors/:id", userController.getDoctor, (req, res) => {
 app.get("/visits", userController.getVisits, (req, res) => {
   res.status(200).json(res.locals.visits);
 });
+app.get("/changePassword"), userController.changePassword, (req, res) => {
+  res.status(200)
+}
 
 //POST
 app.post("/doctors", userController.createDoctor, userController.startSession, (req, res) => {
@@ -87,7 +97,7 @@ app.post(
   (req, res) => {
     res.status(200).json({
       userType: 'doctor',
-      currentUser: res.locals.currentUser,
+      userData: res.locals.userData,
       loggedIn: res.locals.loggedIn,
     });
   }
@@ -101,7 +111,7 @@ app.post(
     res.status(200).json({
       userType: 'patient',
       loggedIn: res.locals.loggedIn,
-      currentUser: res.locals.currentUser,
+      userData: res.locals.userData,
     });
   }
 );
