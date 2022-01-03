@@ -11,7 +11,7 @@ const cookieParser = require("cookie-parser");
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors);
+app.use(cors());
 
 app.get("/authenticate", userController.authenticate, (req, res) => {
   res.status(200).send({

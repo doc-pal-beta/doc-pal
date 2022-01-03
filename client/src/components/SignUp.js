@@ -22,12 +22,22 @@ function SignUp() {
         console.log(formErrors);
         if(Object.keys(formErrors).length===0 & isSubmit){
             console.log(details);
-            //fetch 
+            //fetch from server and update new data
+            fetch('http://localhost:3000/doctors',
+            {
+                method: 'POST',
+                headers:{'Content-Type': 'application/json'},
+                body: JSON.stringify(details)
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+            })
         }
     })
     const validate = (values) =>{
         const errors={};
-        const regex = /^[^s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+        const regex = "/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/";
     
         if(!values.username){
             errors.username= "Username is required"
@@ -35,6 +45,7 @@ function SignUp() {
         if(!values.email){
             errors.email= "Email address is required"
         }
+        
         if(!values.password){
             errors.password="Password is required"
         }
