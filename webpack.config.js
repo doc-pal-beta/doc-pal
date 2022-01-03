@@ -72,16 +72,16 @@ const config = {
     }),
   ],
 
-  devServer: {
-    proxy: {
-      '/': 'http://localhost:3000',
-    },
-    static: {
-      directory: path.join(__dirname),
-    },
-    compress: true,
-    port: 8080,
-  },
+  // devServer: {
+  //   proxy: {
+  //     '/': 'http://localhost:3000',
+  //   },
+  //   static: {
+  //     directory: path.join(__dirname),
+  //   },
+  //   compress: true,
+  //   port: 8080,
+  // },
 };
 
 module.exports = config;

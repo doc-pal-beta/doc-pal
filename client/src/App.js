@@ -14,7 +14,8 @@ class App extends React.Component {
         <h1 className="App">
           {/* <Login/> */}
           {/* <SignUp/> */}
-          <Patient_Info />
+          {/* <Patient_Info /> */}
+          <DoctorHome></DoctorHome>
         </h1>
       </>
     );
