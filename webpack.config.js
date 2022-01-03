@@ -12,6 +12,7 @@ const config = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
   },
+  mode: 'development',
   module: {
     rules: [
       {
@@ -52,15 +53,15 @@ const config = {
     ]
   },
   devServer: {
-    'static': {
-      directory: './dist'
+    static: {
+      directory: path.join(__dirname, 'dist')
     },
- 
     port: 8080,
     // proxy: {
-    //   '/': {
-    //     target: 'http://localhost:3000',
-    //     secure: false
+    //   '/api': {
+    //       target: 'http://localhost:3000',
+    //       pathRewrite: { '^/api': '' },
+    //       secure: false
     //   }
     // },
   },
