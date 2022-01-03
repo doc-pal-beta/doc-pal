@@ -104,7 +104,7 @@ const Login = ({ props }) => {
         className="login"
         onSubmit={(e) => {
           e.preventDefault();
-          console.log(e.target[0].selectedOptions[0].value);
+          // console.log(e.target[0].selectedOptions[0].value);
 
           fetch(
             `http://localhost:3000/doctor/login`,
