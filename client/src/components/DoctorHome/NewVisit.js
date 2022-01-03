@@ -22,16 +22,17 @@ import React, {Component} from 'react'
 
 class NewVisit extends Component {
   handleSubmitClick () {
-    const patientId = this.props.doctor._id
-    const doctorId = this.props.patient._id
+    const doctorId = this.props.doctor._id
+    const patientId = this.props.patient._id
     const date = document.getElementById('newVisitDate').value
     const assessment = document.getElementById('newVisitAssesment').value
     const plan = document.getElementById('newVisitPlan').value
     const prescription = document.getElementById('newVisitPrescription').value
     const homeCare = document.getElementById('newVisitHomeCare').value
-    fetch('http://localhost:3000/doctors', {
+  
+    fetch('http://localhost:3000/visits', {
       method: "POST",
-      body: JSON.stringify(patientId,doctorId,date,assessment,plan,prescription,homeCare),
+      body: JSON.stringify({patientId,doctorId,date,assessment,plan,prescription,homeCare}),
       headers: {"Content-type": "application/json; charset=UTF-8"}
       })
       .then(response => response.text()) 
