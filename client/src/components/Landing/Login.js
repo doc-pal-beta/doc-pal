@@ -19,6 +19,19 @@ const Login = ({ props }) => {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setSubmit] = useState(false);
 
+  useEffect(() => {
+    fetch("http://localhost:3000/authenticate", { credentials: "include" })
+      .then((json) => json.json())
+      .then((response) => {
+        console.log(response);
+        setUserDetails(response);
+        if (response.loggedIn && response.userType) {
+          console.log("Redirecting to home");
+          navigate(`/${response.userType}`);
+        }
+      });
+  }, []);
+
   return (
     <div className="container">
       <h2>Welcome to Doc-Pal</h2>
@@ -32,6 +45,7 @@ const Login = ({ props }) => {
             headers: {
               "Content-Type": "application/json",
             },
+            credentials: "include",
             body: JSON.stringify({
               firstName: e.target[0].value,
               lastName: e.target[1].value,
@@ -99,6 +113,7 @@ const Login = ({ props }) => {
             headers: {
               "Content-Type": "application/json",
             },
+            credentials: "include",
             body: JSON.stringify({
               firstName: e.target[0].value,
               lastName: e.target[1].value,
@@ -108,7 +123,7 @@ const Login = ({ props }) => {
             .then((response) => response.json())
             .then((data) => {
               setUserDetails({
-                userData: data.currentUser,
+                userData: data.userData,
                 loggedIn: data.loggedIn,
                 userType: data.userType,
               });
