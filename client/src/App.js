@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { hot } from "react-hot-loader/root";
 import DoctorHome from "./components/DoctorHome/DoctorHome";
 import NewPatient from "./components/DoctorHome/NewPatient";
@@ -13,7 +13,6 @@ import {
   Link,
   useNavigate,
 } from "react-router-dom";
-import { useEffect } from "react/cjs/react.development";
 
 const App = () => {
   const [userDetails, setUserDetails] = useState({
@@ -22,7 +21,19 @@ const App = () => {
     userData: false,
   });
 
-
+  useEffect(() => {
+    fetch("http://localhost:3000/authenticate", { credentials: "include" })
+      .then((json) => json.json())
+      .then((response) => {
+        setUserDetails(response);
+        if (response.loggedIn && response.userType === "patient") {
+          setUserDetails(response);
+        } else {
+          setUserDetails(response);
+          navigate(`/${userType}`);
+        }
+      });
+  }, []);
 
 
   return (
@@ -30,7 +41,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Login props={{ setUserDetails }} />} exact />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/patient" element={<PatientHome userDetails={userDetails}/>} />
+        <Route path="/patient" element={<PatientHome userDetails={userDetails} setUserDetails={setUserDetails}/>} />
         <Route path="/doctor" element={<DoctorHome userDetails={userDetails}/>} />
         <Route path = "/new-patient" element = {<NewPatient userDetails= {userDetails}/>}/>
         <Route path="/changePass" element={<ChangePass />} />
