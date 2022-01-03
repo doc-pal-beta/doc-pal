@@ -15,9 +15,9 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Login props={{setUserDetails, }}/>} exact/>
-        <Route path="/signup" element={<SignUp/>} />
-        <Route path="/patient" element={<PatientHome/>} />
-        <Route path="/doctor" element={<DoctorHome/>} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/patient" element={<PatientHome userDetails={userDetails}/>} />
+        <Route path="/doctor" element={<DoctorHome userDetails={userDetails}/>} />
       </Routes>
     </Router>
 
