@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import { Navigate } from 'react-router';
+import ToHomePage from './LogOutButton';
 import ToNewPatientPage from './NewPatientButton';
 import NewVisit from './NewVisit';
 import PatientCard from './PatientCard';
-import {useNavigate} from 'react-router-dom'
+
 
 
 class DoctorHome extends Component {
@@ -71,7 +71,6 @@ class DoctorHome extends Component {
     const patients = this.props.userDetails.userData.patients
     let currentPatient = patients[this.state.currentPatientIndex]
     const patient = this.createPatientCard(currentPatient)
-    console.log(this.props)
 
     const visits = [];
     for(let i = 0; i < this.state.visits; i++){
@@ -79,17 +78,8 @@ class DoctorHome extends Component {
     }
     return (
       <div className='DoctorHome'>
-        <button onClick={(e) => {
-          fetch("http://localhost:3000/logout", { credentials: "include" })
-          .then((json) => json.json())
-          .then((response) => {
-            console.log("Redirecting to login");
-            const navigate = useNavigate()
-            navigate(`/${response.userType}`) //************************** */
-            this.props.setUserDetails(response); //********************* */
-          });
-        }}>Log Out</button>
         <h1>Hello Doctor {doctor.firstName} {doctor.lastName}</h1>
+        <ToHomePage/>
         <input id = 'searchForPatient' ></input>
         <button onClick = {() => this.handleSearchClick()}>Search Patient</button>
         {patient}
