@@ -8,24 +8,27 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ props }) => {
+  const { setUserDetails } = props;
+
   //data from server
   const navigate = useNavigate();
+
   const initialValues = { member: "", username: "", password: "" };
   const [details, setDetails] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setSubmit] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setDetails({ ...details, [name]: value });
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setDetails({ ...details, [name]: value });
+  // };
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    setFormErrors(validate(details));
-    setSubmit(true);
-  };
+  // const submitHandler = (e) => {
+  //   e.preventDefault();
+  //   setFormErrors(validate(details));
+  //   setSubmit(true);
+  // };
 
   const id = "61d1f5ffaf426ddc1a0f4f91";
 
@@ -89,8 +92,18 @@ const Login = () => {
           )
             .then((response) => response.json())
             .then((data) => {
-              console.log(data);
-              navigate("/patient");
+              setUserDetails({
+                userData: data.currentUser,
+                loggedIn: data.loggedIn,
+                userType: data.userType,
+              });
+              if(data.loggedIn === true && data.userType === 'patient'){
+                navigate("/patient");
+              } else if (data.loggedIn === true && data.userType === 'doctor'){
+                navigate("/doctor");
+              } else (
+                alert('Log-In not recognized')
+              )
             })
             .catch((error) => {
               console.error("Error:", error);
@@ -147,7 +160,7 @@ const Login = () => {
           LogIn
         </button>
         <br />
-        <Link to="SignUp">Sign Up</Link>
+        <Link to="/signup">Not a Member? Sign Up Here</Link>
       </form>
     </div>
   );
