@@ -62,6 +62,9 @@ app.get("/doctors/:id", userController.getDoctor, (req, res) => {
 app.get("/visits", userController.getVisits, (req, res) => {
   res.status(200).json(res.locals.visits);
 });
+app.get("/changePassword"), userController.changePassword, (req, res) => {
+  res.status(200)
+}
 
 //POST
 app.post("/doctors", userController.createDoctor, userController.startSession, (req, res) => {
