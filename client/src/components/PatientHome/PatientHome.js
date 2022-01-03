@@ -6,35 +6,45 @@ import ToHomePage from "../DoctorHome/LogOutButton";
 import ChangePass from "./changePass";
 import { useNavigate } from "react-router-dom";
 
-const PatientHome = ({ userDetails }) => {
+const PatientHome = ({ userDetails, setUserDetails }) => {
   const navigate = useNavigate();
   const { userType, userData, loggedIn } = userDetails;
+  const handleChangePass = () => {
+    navigate("/changePass");
+  };
 
+  useEffect(() => {
+    fetch("http://localhost:3000/authenticate", { credentials: "include" })
+      .then((json) => json.json())
+      .then((response) => {
+        setUserDetails(response);
+        if (response.loggedIn && response.userType === "patient") {
+          setUserDetails(response);
+        } else {
+          setUserDetails(response);
+          navigate(`/${userType}`);
+        }
+      });
+  }, []);
 
-  console.log("The patients data is", userData);
-  const handleChangePass= () => {
-    navigate('/changePass')
+  console.log('Patient Data are', userDetails.userData)
+  const handleProfile =() =>{
+    navigate("/patient/datalist");
+
   }
 
-  const newData = [];
-  for (let i = 0; i < userDetails.userData.visits.length; i++) {
-    newData.push(
-      <DatailVisitCard visit_Data={userDetails.userData.visits[i]} key={i} />
-    );
-  }
-
-  console.log("passsed in data is", userDetails.userData)
-  
   return (
     <div>
-      
-        <h1>Welcome {userDetails.userData.firstName}</h1>
-        <button className="btn">Profile</button>
-        <Datalist patientData={userDetails.userData}/>
-        {/* <button className="btn" onClick={handleChangePass}>Change Password</button> */}
-        <ToHomePage />
-        {newData}
-    
+      <button className="btn" onClick={handleChangePass}>
+        Change Password
+      </button>
+      <ToHomePage />
+      <h1>Welcome {userData.firstName}</h1>
+      {userDetails.userData.visits.length > 0 &&
+        userDetails.userData.visits.map((visit, key) => (
+          <DatailVisitCard visit_Data={visit} key={key} />
+        ))}
+        <button className="btn" onClick={handleProfile} patientData = {userDetails.userData}>Profile</button>
     </div>
   );
 };

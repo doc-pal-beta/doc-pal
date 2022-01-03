@@ -27,7 +27,7 @@ class ChangePass extends Component {
             placeholder="New Password"
             autoComplete="off"
           ></input><br />
-          <label htmlFor="confirmNewPass">New Password</label>
+          <label htmlFor="confirmNewPass">Confirm New Password</label>
           <input
             className="textbox"
             type="password"
