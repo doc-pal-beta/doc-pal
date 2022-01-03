@@ -33,6 +33,7 @@ function SignUp() {
             .catch(err => console.log('SignUp Failed', err))
         }
     })
+
     const validate = (values) =>{
         const errors={};
         const regex = "/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/";
@@ -55,6 +56,7 @@ function SignUp() {
         }
         return errors;
     };
+    
     return (
         <div className='container'>
             <h2></h2>
