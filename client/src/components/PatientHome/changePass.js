@@ -13,11 +13,12 @@ class changePass extends Component {
               type="text"
               id="tempPass"
               placeholder="Temporary Password"
-              autoComplete="off"
+              autoCompletne="off"
             ></input>
             </div>
         )
     }
 }
 
+//test
 export default changePass;
