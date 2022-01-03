@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import PatientCard from './PatientCard';
-
+import {useNavigate} from 'react-router-dom'
 
 
 class DoctorHome extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state={
       doctor:{},
       patients: [{}],
@@ -63,9 +63,20 @@ class DoctorHome extends Component {
   render() {
     let currentPatient = this.state.patients[this.state.currentPatientIndex]
     const patient = this.createPatientCard(currentPatient)
+    console.log(this.props)
 
     return (
       <div className='DoctorHome'>
+        <button onClick={(e) => {
+          fetch("http://localhost:3000/logout", { credentials: "include" })
+          .then((json) => json.json())
+          .then((response) => {
+            console.log("Redirecting to login");
+            const navigate = useNavigate()
+            navigate(`/${response.userType}`) //************************** */
+            this.props.setUserDetails(response); //********************* */
+          });
+        }}>Log Out</button>
         <h1>Hello Doctor {this.state.doctor.firstName}</h1>
         <input id = 'searchForPatient' ></input>
         <button onClick = {() => this.handleSearchClick()}>Search Patient</button>
