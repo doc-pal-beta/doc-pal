@@ -32,7 +32,6 @@ const PatientHome = ({ userDetails }) => {
         <Datalist patientData={userDetails.userData}/>
         {/* <button className="btn" onClick={handleChangePass}>Change Password</button> */}
         <ToHomePage />
-        <h1>Welcome {userData.firstName}</h1>
         {newData}
     
     </div>
