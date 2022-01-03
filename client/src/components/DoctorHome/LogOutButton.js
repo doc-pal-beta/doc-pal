@@ -18,7 +18,7 @@ const ToHomePage = () => {
     .then(navigate('/'));
   }
   return (
-    <button type="button" onClick={handleClick}>
+    <button className= "btn" type="button" onClick={handleClick}>
       Log Out 
     </button>
   );

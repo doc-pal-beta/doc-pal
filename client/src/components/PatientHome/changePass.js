@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-class changePass extends Component {
+class ChangePass extends Component {
     
     render(){
         return (
@@ -15,10 +15,20 @@ class changePass extends Component {
               placeholder="Temporary Password"
               autoCompletne="off"
             ></input>
+            <br />
+            <label for="newPass">New Password</label>
+            <input
+              className="textbox"
+              type="text"
+              id="newPass"
+              placeholder="New Password"
+              autoCompletne="off"
+            ></input>
+            <button className="btn" >Submit</button>
             </div>
         )
     }
 }
 
 //test
-export default changePass;
+export default ChangePass;
