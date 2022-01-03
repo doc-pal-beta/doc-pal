@@ -4,20 +4,38 @@ import DoctorHome from "./components/DoctorHome/DoctorHome";
 import Login from "./components/Landing/Login";
 import SignUp from "./components/Landing/SignUp";
 import PatientHome from "./components/PatientHome/PatientHome";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+} from "react-router-dom";
+import { useEffect } from "react/cjs/react.development";
 
 const App = () => {
+  const [userDetails, setUserDetails] = useState({
+    userType: false,
+    loggedIn: false,
+    userData: false,
+  });
+  console.log("The global state is", userDetails);
 
-  const [userDetails, setUserDetails] = useState({userType: false, loggedIn: false, userData:false})
-  console.log('The global state is', userDetails)
+
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login props={{setUserDetails, }}/>} exact/>
+        <Route path="/" element={<Login props={{ setUserDetails }} />} exact />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/patient" element={<PatientHome userDetails={userDetails}/>} />
-        <Route path="/doctor" element={<DoctorHome userDetails={userDetails}/>} />
+        <Route
+          path="/patient"
+          element={<PatientHome userDetails={userDetails} setUserDetails={setUserDetails} />}
+        />
+        <Route
+          path="/doctor"
+          element={<DoctorHome userDetails={userDetails} setUserDetails={setUserDetails}/>}
+        />
       </Routes>
     </Router>
   );

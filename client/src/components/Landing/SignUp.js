@@ -25,6 +25,7 @@ function SignUp() {
             //fetch from server and update new data
             fetch('http://localhost:3000/doctors', {
             method: "POST",
+            credentials:'include',
             body: JSON.stringify(details),
             headers: {"Content-type": "application/json; charset=UTF-8"}
             })
