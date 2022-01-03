@@ -12,7 +12,8 @@
     "build-prod": "webpack --mode production",
     "server": "nodemon server/server.js",
     "client": "webpack serve --hot --mode development",
-    "start": "concurrently \"npm run server\" \"npm run client\""
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": " webpack serve --open | nodemon server/server.js"
   },
   "dependencies": {
     "axios": "^0.24.0",

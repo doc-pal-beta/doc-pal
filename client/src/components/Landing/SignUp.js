@@ -22,12 +22,21 @@ function SignUp() {
         console.log(formErrors);
         if(Object.keys(formErrors).length===0 & isSubmit){
             console.log(details);
-            //fetch 
+            //fetch from server and update new data
+            fetch('http://localhost:3000/doctors', {
+            method: "POST",
+            body: JSON.stringify(details),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+            })
+            .then(response => response.text()) 
+            .then(json => console.log(json))
+            .catch(err => console.log('SignUp Failed', err))
         }
     })
+
     const validate = (values) =>{
         const errors={};
-        const regex = /^[^s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+        const regex = "/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/";
     
         if(!values.username){
             errors.username= "Username is required"
@@ -35,6 +44,7 @@ function SignUp() {
         if(!values.email){
             errors.email= "Email address is required"
         }
+        
         if(!values.password){
             errors.password="Password is required"
         }
@@ -46,12 +56,14 @@ function SignUp() {
         }
         return errors;
     };
+    
     return (
         <div className='container'>
             <h2></h2>
-            <form className='SignUp' onSubmit={submitHandler}>Create Account
+            <form className='SignUp' onSubmit={submitHandler}>
+                <strong>Create a Doctor Account</strong>
                 <br/>
-                <p className='error_msg'>{formErrors.username}</p>
+                <p className='error_msg'>{formErrors.username}</p>  
                 <label className='label'> Username:
                     <input className='textbox' type='text' name='username' placeholder='Enter Username' onChange={handleChange}></input>
                 </label>
