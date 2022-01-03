@@ -15,6 +15,15 @@ class changePass extends Component {
               placeholder="Temporary Password"
               autoCompletne="off"
             ></input>
+            <br />
+            <label for="newPass">New Password</label>
+            <input
+              className="textbox"
+              type="text"
+              id="newPass"
+              placeholder="New Password"
+              autoCompletne="off"
+            ></input>
             </div>
         )
     }
