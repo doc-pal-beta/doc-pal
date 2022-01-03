@@ -105,7 +105,7 @@ const Login = ({ props }) => {
         <button className="btn" value="login">
           Log In
         </button>
-        Not a Member? Ask your Doctor about Doc-Pal!
+        <p className = 'notMember'>Not a Member? Ask your Doctor about Doc-Pal!</p>
       </form>
       <form
         className="login"
