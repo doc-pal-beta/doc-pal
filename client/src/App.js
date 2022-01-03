@@ -5,6 +5,7 @@ import NewPatient from "./components/DoctorHome/NewPatient";
 import Login from "./components/Landing/Login";
 import SignUp from "./components/Landing/SignUp";
 import PatientHome from "./components/PatientHome/PatientHome";
+import Datalist from "./components/PatientHome/Datalist";
 import {
   BrowserRouter as Router,
   Routes,

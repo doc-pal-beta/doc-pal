@@ -6,8 +6,7 @@ class DatailVisitCard extends Component {
     
     }
     render() {   
-        console.log('Visit Data are:', this.props.visit_Data)
-        
+        console.log('Visit Data are:', this.props.visit_Data)       
         
         return (
             <div className='visitCard'> 
@@ -18,6 +17,7 @@ class DatailVisitCard extends Component {
                     <p>Objective: {this.props.visit_Data.objective}</p>                    
                     <p>Prescription: {this.props.visit_Data.prescription}</p>
                     <p>HomeCare: {this.props.visit_Data.homeCare}</p>
+                   
                     <br />
                 </div>
                 

@@ -1,7 +1,7 @@
 import React, { useState, UseEffect } from "react";
 import { useEffect } from "react/cjs/react.development";
-import Datalist from "./Datalist";
 import DatailVisitCard from "./DatailVisitCard";
+import Datalist from "./Datalist";
 const PatientHome = ({ userDetails }) => {
   const { userType, userData, loggedIn } = userDetails;
 
@@ -21,12 +21,15 @@ const PatientHome = ({ userDetails }) => {
     );
   }
   
-  console.log('User data', userDetails);
+  console.log('User data', userDetails.userData);
 
   return (
     <div>
       
         <h1>Welcome {userData.firstname}</h1>
+        <button className="btn">Profile
+        </button>
+        <Datalist patientData={userDetails.userData}/>
         {newData}
     
       <button
