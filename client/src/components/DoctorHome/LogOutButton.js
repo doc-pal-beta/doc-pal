@@ -18,7 +18,7 @@ const ToHomePage = () => {
   .then(data => console.log(data));
 
   return (
-    <button type="button" onClick={handleClick}>
+    <button className= "btn" type="button" onClick={handleClick}>
       Log Out 
     </button>
   );

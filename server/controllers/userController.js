@@ -244,6 +244,8 @@ userController.patientLogin = (req, res, next) => {
   Patient.findOne({ firstName, lastName })
     .populate(["visits", "primaryDoctor"])
     .exec((error, patient) => {
+      console.log(password)
+      console.log(patient.password)
       bcrypt.compare(password, patient.password, (error, result) => {
         if (error) return next(error);
         if (result === true) {
@@ -273,8 +275,13 @@ userController.changePassword = (req, res, next) => {
       if (error) return next(error);
       if (result === true) {
         bcrypt.hash(newPassword, 10, (error, hash) => {
-          Patient.findOneAndUpdate({ firstName: firstName, lastName: lastName }, { password: hash });
-        });
+          Patient.findOneAndUpdate({ firstName: firstName, lastName: lastName }, { password: hash })
+          .then((error, success) => {
+            if (error) return next(error);
+            
+            next();
+          })
+        })
       }
     })
   });

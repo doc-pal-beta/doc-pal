@@ -4,6 +4,7 @@ import DoctorHome from "./components/DoctorHome/DoctorHome";
 import NewPatient from "./components/DoctorHome/NewPatient";
 import Login from "./components/Landing/Login";
 import SignUp from "./components/Landing/SignUp";
+import ChangePass from "./components/PatientHome/changePass";
 import PatientHome from "./components/PatientHome/PatientHome";
 import {
   BrowserRouter as Router,
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/patient" element={<PatientHome userDetails={userDetails}/>} />
         <Route path="/doctor" element={<DoctorHome userDetails={userDetails}/>} />
         <Route path = "/new-patient" element = {<NewPatient userDetails= {userDetails}/>}/>
+        <Route path="/changePass" element={<ChangePass />} />
       </Routes>
     </Router>
   );

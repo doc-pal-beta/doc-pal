@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-class changePass extends Component {
+class ChangePass extends Component {
     
     render(){
         return (
@@ -24,10 +24,11 @@ class changePass extends Component {
               placeholder="New Password"
               autoCompletne="off"
             ></input>
+            <button className="btn" >Submit</button>
             </div>
         )
     }
 }
 
 //test
-export default changePass;
+export default ChangePass;
