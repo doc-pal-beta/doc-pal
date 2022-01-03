@@ -36,6 +36,7 @@ const PatientHome = ({ userDetails }) => {
         Sign Out
       </button>
       <h1>Welcome {userData.firstName}</h1>
+      <h1>Welcome {userData.firstName}</h1>
       {newData}
     </div>
   );
