@@ -71,36 +71,40 @@ const Login = ({ props }) => {
         <strong>Patient Log In</strong>
         <br />
         {/* <p className="error_msg">{formErrors.member}</p> */}
-        <label htmlFor="firstName">First Name:</label>
-        <input
-          className="textbox"
-          type="text"
-          id="firstName"
-          placeholder="First Name"
-          autoComplete="off"
-        ></input>
-        <br />
-        <label htmlFor="lastName">Last Name:</label>
-        <input
-          className="textbox"
-          type="text"
-          id="lastName"
-          placeholder="Last Name"
-          autoComplete="off"
-        ></input>
-        <br />
+        <label htmlFor="firstName">First Name</label>
+        <span>
+          <input
+            className="loginInput"
+            type="text"
+            id="firstName"
+            placeholder="First Name"
+            autoComplete="off"
+          ></input>
+        </span>
+        <label htmlFor="lastName">Last Name</label>
+        <span>
+          <input
+            className="loginInput"
+            type="text"
+            id="lastName"
+            placeholder="Last Name"
+            autoComplete="off"
+          ></input>
+        </span>
         {/* <p className="error_msg">{formErrors.username}</p> */}
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          className="textbox"
-          id="password"
-          placeholder="Password"
-        ></input>
+        <label htmlFor="password">Password</label>
+        <span>
+          <input
+            type="password"
+            className="loginInput"
+            id="password"
+            placeholder="Password"
+          ></input>
+        </span>
         {/* <p className="error_msg">{formErrors.password}</p> */}
         <br />
         <button className="btn" value="login">
-          LogIn
+          Log In
         </button>
         Not a Member? Ask your Doctor about Doc-Pal!
       </form>
@@ -144,7 +148,7 @@ const Login = ({ props }) => {
         {/* <p className="error_msg">{formErrors.member}</p> */}
         <label htmlFor="doc-firstName">First Name:</label>
         <input
-          className="textbox"
+          className="loginInput"
           type="text"
           id="doc-firstName"
           placeholder="First Name"
@@ -154,7 +158,7 @@ const Login = ({ props }) => {
 
         <label htmlFor="doc-lastName">Last Name:</label>
         <input
-          className="textbox"
+          className="loginInput"
           type="text"
           id="doc-lastName"
           placeholder="Last Name"
@@ -166,7 +170,7 @@ const Login = ({ props }) => {
         <label htmlFor="doc-password">Password:</label>
         <input
           type="password"
-          className="textbox"
+          className="loginInput"
           id="doc-password"
           placeholder="Password"
         ></input>
@@ -174,7 +178,7 @@ const Login = ({ props }) => {
         {/* <p className="error_msg">{formErrors.password}</p> */}
         <br />
         <button className="btn" value="login">
-          LogIn
+          Log In
         </button>
         <Link to="/signup">Not Regeistered with Doc-Pal? Sign Up Today!</Link>
       </form>
