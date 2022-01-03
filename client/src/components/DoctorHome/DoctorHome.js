@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import { Navigate } from 'react-router';
+import ToNewPatientPage from './NewPatientButton';
 import NewVisit from './NewVisit';
 import PatientCard from './PatientCard';
 
@@ -51,6 +53,9 @@ class DoctorHome extends Component {
       visits: 1
     })
   }
+  handleNewPatientClick () {
+    Navigate('/new-patient')
+  }
   createPatientCard(currentPatient) {
     if(!currentPatient){return <h1>No Patients Yet</h1>}
     else{return <PatientCard 
@@ -80,6 +85,7 @@ class DoctorHome extends Component {
         <button onClick = {() => this.handleBackClick()}>Back</button>
         <button onClick = {() => this.handleVisitClick()}>Add Visit</button>
         <button onClick = {() => this.handleNextClick()}>Next</button>
+        <ToNewPatientPage/>
         {visits}
       </div>
     )
