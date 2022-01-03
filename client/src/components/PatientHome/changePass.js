@@ -1,33 +1,53 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 
-class ChangePass extends Component {
-    
-    render(){
+const ChangePass = () => {
+
+ handleClick = () => {
+    fetch('http://localhost:3000/patients/changePass',{
+    credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(response => {
+      if(response.status == 200){
+          window.location.href = '/patients/changePass'
+      }
+      else{
+          alert(response.message)
+      }
+    })
+ }
+  
+  handleSubmit = () => {
+    alert("Password has been successfully changed.");
+  }
+
         return (
             <div>
                 <h1>Change Password</h1>
                 <br />
-            <label htmlFor="tempPass">Current Password</label>
+            <form onSubmit={handleSubmit}>
+            <label for="tempPass">Temporary Password</label>
             <input
               className="textbox"
-              type="password"
+              type="text"
               id="tempPass"
               placeholder="Temporary Password"
-              autoComplete="off"
+              autoCompletne="off"
             ></input>
             <br />
-            <label htmlFor="newPass">New Password</label>
+            <label for="newPass">New Password</label>
             <input
               className="textbox"
-              type="password"
+              type="text"
               id="newPass"
               placeholder="New Password"
-              autoComplete="off"
+              autoCompletne="off"
             ></input>
-            <button className="btn" >Submit</button>
+            <button className="btn" type="submit" onClick={handleClick}>Submit</button>
+            </form>
+            
             </div>
         )
-    }
 }
 
 //test
