@@ -17,7 +17,7 @@ function Login() {
         setFormErrors(validate(details));
         setSubmit(true);
     }    
-
+    const id = '61d1f5ffaf426ddc1a0f4f91';
     useEffect((id)=>{
         
         if(Object.keys(formErrors).length===0 & isSubmit){
@@ -26,13 +26,15 @@ function Login() {
             if(details.member==='patient'){
                 fetch(`http://localhost:3000/patient/:${id}`)
                 .then(res => res.json())
-                .then(data => setDetails({data}));
+                .then(data => setDetails({data}))
+                .catch(err => console.log('Request Failed', err))
             }
             //fetch data from doctor side
             if(details.member==='doctor'){
                 fetch(`http://localhost:3000/doctor/${id}`)
                 .then(res => res.json())
-                .then(data => setDetails({data}));
+                .then(data => setDetails({data}))
+                .catch(err => console.log('Request Failed', err))
             }
             //need to match data with fetched data, if ok, then render to another page
         }        

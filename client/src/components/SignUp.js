@@ -23,16 +23,14 @@ function SignUp() {
         if(Object.keys(formErrors).length===0 & isSubmit){
             console.log(details);
             //fetch from server and update new data
-            fetch('http://localhost:3000/doctors',
-            {
-                method: 'POST',
-                headers:{'Content-Type': 'application/json'},
-                body: JSON.stringify(details)
+            fetch('http://localhost:3000/doctors', {
+            method: "POST",
+            body: JSON.stringify(details),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
             })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-            })
+            .then(response => response.text()) 
+            .then(json => console.log(json))
+            .catch(err => console.log('SignUp Failed', err))
         }
     })
     const validate = (values) =>{
@@ -62,7 +60,7 @@ function SignUp() {
             <h2></h2>
             <form className='SignUp' onSubmit={submitHandler}>Create Account
                 <br/>
-                <p className='error_msg'>{formErrors.username}</p>
+                <p className='error_msg'>{formErrors.username}</p>  
                 <label className='label'> Username:
                     <input className='textbox' type='text' name='username' placeholder='Enter Username' onChange={handleChange}></input>
                 </label>
