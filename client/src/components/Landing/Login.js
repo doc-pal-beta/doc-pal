@@ -23,7 +23,6 @@ const Login = ({ props }) => {
     fetch("http://localhost:3000/authenticate", { credentials: "include" })
       .then((json) => json.json())
       .then((response) => {
-        console.log(response);
         setUserDetails(response);
         if (response.loggedIn && response.userType) {
           console.log("Redirecting to home");
@@ -55,7 +54,7 @@ const Login = ({ props }) => {
             .then((response) => response.json())
             .then((data) => {
               setUserDetails({
-                userData: data.currentUser,
+                userData: data.userData,
                 loggedIn: data.loggedIn,
                 userType: data.userType,
               });

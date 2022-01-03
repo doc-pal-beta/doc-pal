@@ -6,7 +6,6 @@ class DatailVisitCard extends Component {
     
     }
     render() {   
-        console.log('Visit Data are:', this.props.visit_Data)       
         
         return (
             <div className='visitCard'> 

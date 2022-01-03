@@ -19,9 +19,7 @@ function SignUp() {
     }    
 
     useEffect(()=>{
-        console.log(formErrors);
         if(Object.keys(formErrors).length===0 & isSubmit){
-            console.log(details);
             //fetch from server and update new data
             fetch('http://localhost:3000/doctors', {
             method: "POST",

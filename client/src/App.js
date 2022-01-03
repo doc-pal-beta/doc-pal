@@ -22,7 +22,7 @@ const App = () => {
     loggedIn: false,
     userData: false,
   });
-  console.log("The global state is", userDetails);
+
 
 
 

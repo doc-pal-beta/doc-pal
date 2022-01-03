@@ -5,8 +5,7 @@ class Datalist extends Component {
         super(props);
     }
     render() {
-        console.log('Patient Profile Data',this.props.patientData)
-        const list= this.props.patientData;
+        const list= this.props.list;
         return (
             <div className='data_list'>
                 <p>First Name: {list.firstName}</p>
@@ -21,5 +20,4 @@ class Datalist extends Component {
         )
     }
 }
-
 export default Datalist;
