@@ -7,22 +7,22 @@ class ChangePass extends Component {
             <div>
                 <h1>Change Password</h1>
                 <br />
-            <label for="tempPass">Temporary Password</label>
+            <label htmlFor="tempPass">Current Password</label>
             <input
               className="textbox"
-              type="text"
+              type="password"
               id="tempPass"
               placeholder="Temporary Password"
-              autoCompletne="off"
+              autoComplete="off"
             ></input>
             <br />
-            <label for="newPass">New Password</label>
+            <label htmlFor="newPass">New Password</label>
             <input
               className="textbox"
-              type="text"
+              type="password"
               id="newPass"
               placeholder="New Password"
-              autoCompletne="off"
+              autoComplete="off"
             ></input>
             <button className="btn" >Submit</button>
             </div>

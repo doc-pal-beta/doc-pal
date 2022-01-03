@@ -15,7 +15,7 @@ const ToHomePage = () => {
     })
     .then(response => response.json())
     .then(data => console.log(data))
-    .then(navigate('/'));
+    .then(setTimeout(()=>{navigate('/')}, 1000));
   }
   return (
     <button className= "btn" type="button" onClick={handleClick}>

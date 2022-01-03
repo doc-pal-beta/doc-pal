@@ -20,7 +20,6 @@ userController.getPatients = (req, res, next) => {
   Patient.find(req.query)
     .populate(["primaryDoctor", "visits"])
     .exec((err, success) => {
-      console.log(err, success);
       if (err) next(err);
       res.locals.patients = success;
       next();
@@ -42,7 +41,6 @@ userController.getDoctor = (req, res, next) => {
   Doctor.findOne({ _id: req.params.id })
     .populate("patients")
     .exec((err, doctor) => {
-      console.log(err, doctor);
       if (err) next(err);
       res.locals.doctor = doctor;
       next();
@@ -100,7 +98,6 @@ userController.createPatient = (req, res, next) => {
 userController.createVisit = (req, res, next) => {
   Visit.create(req.body, (error, success) => {
     if (error){ 
-      console.log(error)
       next(error)
     };
     res.locals.newVisit = success;
@@ -168,8 +165,6 @@ userController.authenticate = async (req, res, next) => {
   res.locals.loggedIn = false;
   res.locals.userType = "";
   res.locals.userData = false;
-  console.log(req.cookies.JWT, req.cookies);
-  console.log(req.headers);
   if (req.cookies.JWT === undefined) {
     return next();
   }
@@ -184,7 +179,6 @@ userController.authenticate = async (req, res, next) => {
     if (error) return next(error);
     return payload;
   });
-  console.log("verified", verified);
 
   if (verified.userType === "patient") {
     Patient.findOne({ _id: verified.userId })
@@ -200,7 +194,6 @@ userController.authenticate = async (req, res, next) => {
     Doctor.findOne({ _id: verified.userId })
       .populate("patients")
       .exec((error, doctor) => {
-        console.log(doctor);
         if (error) {
         }
         res.locals.userData = doctor;
@@ -222,9 +215,7 @@ userController.doctorLogin = (req, res, next) => {
     .populate("patients")
     .exec((error, doctor) => {
       if (error) return next(error);
-      console.log(error, doctor);
       bcrypt.compare(password, doctor.password, (error, result) => {
-        console.log(result);
         if (error) return next(error);
         if (result === true) {
           res.locals.userData = doctor;
@@ -244,8 +235,6 @@ userController.patientLogin = (req, res, next) => {
   Patient.findOne({ firstName, lastName })
     .populate(["visits", "primaryDoctor"])
     .exec((error, patient) => {
-      console.log(password)
-      console.log(patient.password)
       bcrypt.compare(password, patient.password, (error, result) => {
         if (error) return next(error);
         if (result === true) {
