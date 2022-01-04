@@ -12,7 +12,7 @@ class Datalist extends Component {
         const docList = list.primaryDoctor;
         console.log('Passed in Data are', list)
         return (
-            <div className='data_list'>
+            <div className='container'>
                 <h1>Profile Page</h1>
                 <p>First Name: {list.firstName}</p>
                 <p>Last Name: {list.lastName}</p>
