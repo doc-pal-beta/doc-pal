@@ -60,6 +60,7 @@ userController.getVisits = (req, res, next) => {
 
 //POST
 userController.createDoctor = (req, res, next) => {
+  //expects: firstName,  lastName, title, licenseNumber, password
   res.locals.userData = false;
   res.locals.userType = "";
   res.locals.loggedIn = false;
@@ -77,6 +78,7 @@ userController.createDoctor = (req, res, next) => {
 };
 
 userController.createPatient = async (req, res, next) => {
+  //expects: firstName, lastName, dateOfBirth, sex, language, address, primaryDoctor, password
   let privateKey;
   if(!req.body.primaryDoctor){
     privateKey = fs.readFileSync(path.join(__dirname, "./privatekey.json"),"utf-8");
@@ -84,7 +86,7 @@ userController.createPatient = async (req, res, next) => {
       if (error) return next(error);
       return payload
     });
-    Object.assign(req.body, {primaryDoctor: payload.userId})
+    Object.assign(req.body, {primaryDoctor: payload.sub})
   }
 
   const characters =
@@ -149,8 +151,7 @@ userController.startSession = (req, res, next) => {
     //ARG 1 JWT USER META DATA ***NO SENSITIVE INFO***
     jwt.sign(
       {
-        cookieId: res.locals.sessionId,
-        userId: res.locals.userData._id,
+        sub: res.locals.userData._id,
         userType: res.locals.userType,
       },
       privateKey, //ARG 2 PRIVATE KEY
@@ -193,7 +194,7 @@ userController.authenticate = async (req, res, next) => {
   });
 
   if (verified.userType === "patient") {
-    Patient.findOne({ _id: verified.userId })
+    Patient.findOne({ _id: verified.sub })
       .populate(["visits", "primaryDoctor"])
       .exec((error, patient) => {
         if (error) return next(error);
@@ -203,7 +204,7 @@ userController.authenticate = async (req, res, next) => {
         return next();
       });
   } else if (verified.userType === "doctor") {
-    Doctor.findOne({ _id: verified.userId })
+    Doctor.findOne({ _id: verified.sub })
       .populate("patients")
       .exec((error, doctor) => {
         if (error) {
