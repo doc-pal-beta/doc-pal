@@ -1,79 +1,59 @@
 import React, {useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 
-function SignUp() {
-
-    const initialValues = {username:"", email:'', password:"", password2:""};
-    const [details, setDetails] = useState(initialValues);
-    const [formErrors, setFormErrors] = useState({});
-    const [isSubmit, setSubmit] = useState(false);
-
-    const handleChange = (e) => {
-        const {name, value} = e.target;
-        setDetails({...details, [name]:value});
-    }
-    
-    const submitHandler = e =>{
-        e.preventDefault();
-        setFormErrors(validate(details));
-        setSubmit(true);
-    }    
-
-    useEffect(()=>{
-        if(Object.keys(formErrors).length===0 & isSubmit){
-            //fetch from server and update new data
-            fetch('http://localhost:3000/doctors', {
-            method: "POST",
-            credentials:'include',
-            body: JSON.stringify(details),
-            headers: {"Content-type": "application/json; charset=UTF-8"}
-            })
-            .then(response => response.text()) 
-            .then(json => console.log(json))
-            .catch(err => console.log('SignUp Failed', err))
-        }
-    })
-
-    const validate = (values) =>{
-        const errors={};
-        const regex = "/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/";
-    
-        if(!values.username){
-            errors.username= "Username is required"
-        }
-        if(!values.email){
-            errors.email= "Email address is required"
-        }
-        
-        if(!values.password){
-            errors.password="Password is required"
-        }
-        if(!values.password2){
-            errors.password2="Confirmation Password is required"
-        }
-        if(values.password !== values.password2){
-            errors.password2="Password didn't match"
-        }
-        return errors;
-    };
+const SignUp = ({setUserDetails}) => {
+    const navigate = useNavigate()
     
     return (
         <div className='container'>
             <h2>Welcome To Doc-Pal</h2>
-            <form className='login' onSubmit={submitHandler}>
+            <form className='login' onSubmit={(e)=> {
+                e.preventDefault();
+                if (e.target[4].value === e.target[5].value){
+                    fetch(`http://localhost:3000/doctors`, {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      credentials: "include",
+                      body: JSON.stringify({
+                        firstName: e.target[0].value,
+                        lastName: e.target[1].value,
+                        title: e.target[2].value,
+                        licenseNumber: e.target[3].value,
+                        password: e.target[4].value,
+                      }),
+                    })
+                    .then(response => response.json())
+                    .then((user) => {
+                      if (user.userData) {
+                        alert("Account Created Successfully")
+                        setUserDetails(user)
+                        navigate("/doctor")
+                      }
+                    })
+                  } else { alert("The inputted passwords do not match.")}
+            }}>
                 <strong>Create a Doctor Account</strong>
                 <br/>
-                <p className='error_msg'>{formErrors.username}</p>  
-                <label>Username</label>
-                <input className='loginInput' type='text' name='username' placeholder='Enter Username' onChange={handleChange}></input>
-                <p className='error_msg'>{formErrors.email}</p>
-                <label className='label'> Email</label>
-                <input className='loginInput' type='text' name='email' placeholder='Enter Email' onChange={handleChange} value={details.email}></input>
-                <p className='error_msg'>{formErrors.password}</p>
+
+                <label>First Name</label>
+                <input className='loginInput' type='text' name='firstName' placeholder='First Name' autoComplete='off'></input>
+
+                <label>Last Name</label>
+                <input className='loginInput' type='text' name='lastName' placeholder='Last Name' autoComplete='off'></input>
+
+                <label className='label'> Profession</label>
+                <input className='loginInput' type='text' name='profession' placeholder='Profession' autoComplete='off'></input>
+
+                <label className='label'> License Number</label>
+                <input className='loginInput' type='text' name='license' placeholder='Enter State License #' autoComplete='off'></input>
+
                 <label className='label'> Password</label>
-                <input className='loginInput' type='password' name='password' placeholder='Enter Password' onChange={handleChange} value={details.password}></input>
-                <p className='error_msg'>{formErrors.password2}</p>
+                <input className='loginInput' type='password' name='password' placeholder='Enter Password' autoComplete='off'></input>
+
                 <label className='label'> Password</label>
-                <input className='loginInput' type='password' name='password2' placeholder='Re-Enter Password' onChange={handleChange} value={details.password2}></input>
+                <input className='loginInput' type='password' name='password2' placeholder='Confirm Password' autoComplete='off'></input>
                 <br />
                 <div className='button'>
                     <button className='btn' value='SignUp'>SignUp</button>
