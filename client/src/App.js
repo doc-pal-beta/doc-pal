@@ -46,6 +46,7 @@ const App = () => {
         <Route path="/doctor" element={<DoctorHome userDetails={userDetails}/>} />
         <Route path = "/new-patient" element = {<NewPatient userDetails= {userDetails}/>}/>
         <Route path="/changePass" element={<ChangePass />} />
+        <Route path="/profile" element={<Datalist userDetails ={userDetails.userData} />} />
       </Routes>
     </Router>
   );

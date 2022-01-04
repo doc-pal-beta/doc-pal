@@ -28,6 +28,11 @@ const PatientHome = ({ userDetails, setUserDetails }) => {
   }, []);
 
   console.log('Patient Data are', userDetails.userData)
+
+  const handleChangeProfile = () => {
+    navigate('/profile')
+    
+  }
   
 
   return (
@@ -35,13 +40,15 @@ const PatientHome = ({ userDetails, setUserDetails }) => {
       <button className="btn" onClick={handleChangePass}>
         Change Password
       </button>
+      <button className="btn" onClick={handleChangeProfile}>
+        Profile
+      </button>
       <ToHomePage />
       <h1>Welcome {userData.firstName}</h1>
       {userDetails.userData.visits.length > 0 &&
         userDetails.userData.visits.map((visit, key) => (
           <DatailVisitCard visit_Data={visit} key={key} />
         ))}
-        <button className="btn">Profile</button>
     </div>
   );
 };
