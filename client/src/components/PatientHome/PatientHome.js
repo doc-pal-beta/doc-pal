@@ -1,6 +1,7 @@
 import React, { useState, UseEffect } from "react";
 import { useEffect } from "react/cjs/react.development";
 import DatailVisitCard from "./DatailVisitCard";
+import Datalist from "./Datalist";
 import ToHomePage from "../DoctorHome/LogOutButton";
 import ChangePass from "./changePass";
 import { useNavigate } from "react-router-dom";
@@ -26,10 +27,21 @@ const PatientHome = ({ userDetails, setUserDetails }) => {
       });
   }, []);
 
+  console.log('Patient Data are', userDetails.userData)
+
+  const handleChangeProfile = () => {
+    navigate('/profile')
+    
+  }
+  
+
   return (
     <div>
       <button className="btn" onClick={handleChangePass}>
         Change Password
+      </button>
+      <button className="btn" onClick={handleChangeProfile}>
+        Profile
       </button>
       <ToHomePage />
       <h1>Welcome {userData.firstName}</h1>

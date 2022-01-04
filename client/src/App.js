@@ -6,6 +6,7 @@ import Login from "./components/Landing/Login";
 import SignUp from "./components/Landing/SignUp";
 import ChangePass from "./components/PatientHome/changePass";
 import PatientHome from "./components/PatientHome/PatientHome";
+import Datalist from "./components/PatientHome/Datalist";
 import {
   BrowserRouter as Router,
   Routes,
@@ -43,7 +44,12 @@ const App = () => {
           path="/new-patient"
           element={<NewPatient userDetails={userDetails} />}
         />
+<<<<<<< HEAD
         <Route path="/changePass" element={<ChangePass userDetails={userDetails} />} />
+=======
+        <Route path="/changePass" element={<ChangePass />} />
+        <Route path="/profile" element={<Datalist userDetails ={userDetails.userData} />} />
+>>>>>>> dev
       </Routes>
     </Router>
   );
