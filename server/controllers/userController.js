@@ -256,18 +256,20 @@ userController.logout = (req, res, next) => {
 };
 
 userController.changePassword = (req, res, next) => {
-  const { firstName, lastName, tempPassword, newPassword } = req.body;
+  const { firstName, lastName, currentPassword, newPassword } = req.body;
 
   Patient.findOne({ firstName: firstName, lastName: lastName })
     .exec((error, patient) => {
-      bcrypt.compare(tempPassword, patient.password, (error, result) => {
+      bcrypt.compare(currentPassword, patient.password, (error, result) => {
       if (error) return next(error);
       if (result === true) {
         bcrypt.hash(newPassword, 10, (error, hash) => {
           Patient.findOneAndUpdate({ firstName: firstName, lastName: lastName }, { password: hash })
-          .then((error, success) => {
+          .exec((error, success) => {
+            console.log(error)
+            console.log(success)
             if (error) return next(error);
-            
+            res.locals.changePass = success;
             next();
           })
         })
