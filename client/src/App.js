@@ -6,6 +6,7 @@ import Login from "./components/Landing/Login";
 import SignUp from "./components/Landing/SignUp";
 import ChangePass from "./components/PatientHome/changePass";
 import PatientHome from "./components/PatientHome/PatientHome";
+import Datalist from "./components/PatientHome/Datalist";
 import {
   BrowserRouter as Router,
   Routes,
@@ -44,6 +45,7 @@ const App = () => {
           element={<NewPatient userDetails={userDetails} />}
         />
         <Route path="/changePass" element={<ChangePass />} />
+        <Route path="/profile" element={<Datalist userDetails ={userDetails.userData} />} />
       </Routes>
     </Router>
   );

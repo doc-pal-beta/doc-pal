@@ -16,6 +16,7 @@ class DatailVisitCard extends Component {
                     <p>Objective: {this.props.visit_Data.objective}</p>                    
                     <p>Prescription: {this.props.visit_Data.prescription}</p>
                     <p>HomeCare: {this.props.visit_Data.homeCare}</p>
+                   
                     <br />
                 </div>
                 
