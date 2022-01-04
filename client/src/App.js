@@ -44,12 +44,8 @@ const App = () => {
           path="/new-patient"
           element={<NewPatient userDetails={userDetails} />}
         />
-<<<<<<< HEAD
         <Route path="/changePass" element={<ChangePass userDetails={userDetails} />} />
-=======
-        <Route path="/changePass" element={<ChangePass />} />
         <Route path="/profile" element={<Datalist userDetails ={userDetails.userData} />} />
->>>>>>> dev
       </Routes>
     </Router>
   );
