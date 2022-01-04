@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const NewPatient = ({userDetails}) => {
   const navigate = useNavigate();
@@ -11,6 +12,8 @@ const NewPatient = ({userDetails}) => {
     const dateOfBirth = document.getElementById("newPatientDOB").value;
     const language = document.getElementById("newPatientLanguage").value;
     const address = document.getElementById("newPatientAddress").value;
+    const sex = document.getElementById("newPatientSex").value;
+
 
     fetch("http://localhost:3000/patients", {
       method: "POST",
@@ -22,6 +25,7 @@ const NewPatient = ({userDetails}) => {
         dateOfBirth,
         language,
         address,
+        sex
       }),
       headers: { "Content-type": "application/json; charset=UTF-8" },
     })
@@ -63,8 +67,12 @@ const NewPatient = ({userDetails}) => {
         <label className='label'> Address
           <input className='loginInput' type='text' id = 'newPatientAddress' placeholder='address'></input>
         </label>
+        <label className='label'> Sex
+          <input className='loginInput' type='text' id = 'newPatientSex' placeholder='Sex'></input>
+        </label>
         <br/>
         <button className = 'btn' onClick = {() => handleSubmitClick()}>Submit</button>
+        <Link to="/doctor">Go Back</Link>
       </div>
       
     </div>
