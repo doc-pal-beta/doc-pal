@@ -12,7 +12,7 @@ const ToNewPatientPage = () => {
   const handleClick = () => navigate('/new-patient');
   
   return (
-    <button type="button" onClick={handleClick}>
+    <button className="btn" type="button" onClick={handleClick}>
       New Patient
     </button>
   );

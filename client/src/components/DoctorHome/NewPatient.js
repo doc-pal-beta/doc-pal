@@ -1,40 +1,44 @@
-import React, {Component} from 'react'
+import React, { Component } from "react";
+import { useNavigate } from "react-router-dom";
 
-// const patientSchema = new Schema({
-//   firstName: { type: String, required: true },
-//   lastName: { type: String, required: true },
-//   //temporaryPassword: { type: String },
-//   password: { type: String },
-//   dateOfBirth: { type: String, required: true }, // MM/DD/YYYY
-//   sex: String,
-//   language: String,
-//   address: String,
-//   primaryDoctor: {
-//     type: Schema.Types.ObjectId,
-//     ref: "doctor",
-//   },
-//   visits: [
-//     {
-//       type: Schema.Types.ObjectId,
-//       ref: "visit",
-//     },
-//   ],
-// });
+const NewPatient = ({userDetails}) => {
+  const navigate = useNavigate();
 
+  const handleSubmitClick = () => {
+    const primaryDoctor = userDetails.userData._id;
+    const firstName = document.getElementById("newPatientFirstName").value;
+    const lastName = document.getElementById("newPatientLastName").value;
+    const dateOfBirth = document.getElementById("newPatientDOB").value;
+    const language = document.getElementById("newPatientLanguage").value;
+    const gender = document.getElementById("newPatientGender").value;
+    const address = document.getElementById("newPatientAddress").value;
 
-class NewPatient extends Component {
-  handleSubmitClick () {
-    const primaryDoctor = this.props.userDetails.userData._id
-    const firstName = document.getElementById('newPatientFirstName').value
-    const lastName = document.getElementById('newPatientLastName').value
-    const dateOfBirth = document.getElementById('newPatientDOB').value
-    const language = document.getElementById('newPatientLanguage').value
-    const address = document.getElementById('newPatientAddress').value
-  
-    fetch('http://localhost:3000/patients', {
+    fetch("http://localhost:3000/patients", {
       method: "POST",
-      body: JSON.stringify({primaryDoctor,firstName,lastName,dateOfBirth,language,address}),
-      headers: {"Content-type": "application/json; charset=UTF-8"}
+      credentials:'include',
+      body: JSON.stringify({
+        primaryDoctor,
+        firstName,
+        lastName,
+        dateOfBirth,
+        sex: gender,
+        language,
+        address,
+      }),
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+    })
+      .then((response) => response.json())
+      .then((success) => {
+        console.log(success)
+        if (success.hasOwnProperty('userData')) {
+          alert(
+            `Successfully created your new patient account! An email has been sent to their inbox containing their new temporary password... ${success.tempPassword}`
+          );
+          navigate("/doctor");
+        } else
+          alert(
+            "Something Went Wrong! Please make sure all fields are correct!"
+          );
       })
       .then(response => response.text()) 
       .then(json => console.log(json))
@@ -69,5 +73,50 @@ class NewPatient extends Component {
     )
   }
 }
+
+  //     <label className="label">
+  //       E-Mail:
+  //       <input
+  //         className="textbox"
+  //         type="text"
+  //         id="MockEmail"
+  //         placeholder="E-Mail Address"
+  //         autoComplete="off"
+  //       ></input>
+  //     </label>
+  //     <br />
+  //     <br />
+
+  //     <label className="label">
+  //       Gender:
+  //       <input
+  //         className="textbox"
+  //         type="text"
+  //         id="newPatientGender"
+  //         placeholder="Gender"
+  //         autoComplete="off"
+  //       ></input>
+  //     </label>
+  //     <br />
+  //     <br />
+
+  //     <label className="label">
+  //       Address:
+  //       <input
+  //         className="textbox"
+  //         type="text"
+  //         id="newPatientAddress"
+  //         placeholder="address"
+  //         autoComplete="off"
+  //       ></input>
+  //     </label>
+  //     <br />
+  //     <br />
+  //     <button className="btn" onClick={() => handleSubmitClick()}>
+  //       Submit
+  //     </button>
+  //   </div>
+  // );
+// };
 
 export default NewPatient;

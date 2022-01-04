@@ -63,30 +63,40 @@ userController.createDoctor = (req, res, next) => {
     Object.assign(req.body, { password: hash });
     Doctor.create(req.body, (error, success) => {
       if (error) res.sendStatus(400).json(error);
-      res.locals.newDoctor = success;
+      res.locals.userData = success;
       res.locals.userType = "doctor";
       res.locals.loggedIn = true;
       return next();
     });
   });
 };
-userController.createPatient = (req, res, next) => {
-  const { firstName, lastName, dateOfBirth } = req.body;
+
+userController.createPatient = async (req, res, next) => {
+  let privateKey;
+  if(!req.body.primaryDoctor){
+    privateKey = fs.readFileSync(path.join(__dirname, "./privatekey.json"),"utf-8");
+    const payload = await jwt.verify(req.cookies.JWT, privateKey, (error, payload) => {
+      if (error) return next(error);
+      return payload
+    });
+    Object.assign(req.body, {primaryDoctor: payload.userId})
+  }
+
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   const passwordLength = 6;
-
   let tempPassword = "";
   for (let i = 0; i < passwordLength; i++) {
     tempPassword += characters.charAt(
       Math.floor(Math.random() * characters.length)
     );
   }
+
   bcrypt.hash(tempPassword, 10, (error, hash) => {
     Object.assign(req.body, { password: hash });
     Patient.create(req.body, (error, success) => {
       if (error) next(error);
-      res.locals.newPatient = success;
+      res.locals.userData = success;
       res.locals.tempPassword = tempPassword;
       req.params.doctorId = req.body.primaryDoctor;
       req.params.patientId = success._id;
@@ -94,17 +104,15 @@ userController.createPatient = (req, res, next) => {
     });
   });
 };
-
 userController.createVisit = (req, res, next) => {
   Visit.create(req.body, (error, success) => {
-    if (error){ 
-      next(error)
-    };
+    if (error) {
+      next(error);
+    }
     res.locals.newVisit = success;
     next();
   });
 };
-
 //Link/Add to Collection
 userController.linkVisitToPatient = (req, res, next) => {
   Patient.findOne({ _id: req.body.patientId }).exec((error, patient) => {
@@ -121,7 +129,7 @@ userController.linkPatientToDoctor = (req, res, next) => {
     doctor.patients.push(patientId);
     doctor.save((err) => {
       if (err) next(err);
-      res.locals.doctor = doctor;
+      console.log(res.locals.userData)
       next();
     });
   });
@@ -129,6 +137,7 @@ userController.linkPatientToDoctor = (req, res, next) => {
 
 //Session Storage and store user meta data through JWT
 userController.startSession = (req, res, next) => {
+  console.log(res.locals.loggedIn)
   if (res.locals.loggedIn) {
     privateKey = fs.readFileSync(
       path.join(__dirname, "./privatekey.json"),
@@ -147,6 +156,7 @@ userController.startSession = (req, res, next) => {
       },
       (err, token) => {
         // ARG 4 CALLBACK
+        console.log(err, token)
         res.cookie("JWT", token, {
           httpOnly: true,
           sameSite: "none",
@@ -232,9 +242,12 @@ userController.doctorLogin = (req, res, next) => {
 
 userController.patientLogin = (req, res, next) => {
   const { firstName, lastName, password } = req.body;
+  console.log(req.body)
   Patient.findOne({ firstName, lastName })
     .populate(["visits", "primaryDoctor"])
     .exec((error, patient) => {
+      console.log(error, patient)
+      if (error) return next(error)
       bcrypt.compare(password, patient.password, (error, result) => {
         if (error) return next(error);
         if (result === true) {
@@ -256,24 +269,29 @@ userController.logout = (req, res, next) => {
 };
 
 userController.changePassword = (req, res, next) => {
-  const { firstName, lastName, tempPassword, newPassword } = req.body;
+  const { firstName, lastName, currentPassword, newPassword } = req.body;
 
-  Patient.findOne({ firstName: firstName, lastName: lastName })
-    .exec((error, patient) => {
-      bcrypt.compare(tempPassword, patient.password, (error, result) => {
-      if (error) return next(error);
-      if (result === true) {
-        bcrypt.hash(newPassword, 10, (error, hash) => {
-          Patient.findOneAndUpdate({ firstName: firstName, lastName: lastName }, { password: hash })
-          .then((error, success) => {
-            if (error) return next(error);
-            
-            next();
-          })
-        })
-      }
-    })
-  });
+  Patient.findOne({ firstName: firstName, lastName: lastName }).exec(
+    (error, patient) => {
+      bcrypt.compare(currentPassword, patient.password, (error, result) => {
+        if (error) return next(error);
+        if (result === true) {
+          bcrypt.hash(newPassword, 10, (error, hash) => {
+            Patient.findOneAndUpdate(
+              { firstName: firstName, lastName: lastName },
+              { password: hash }
+            ).exec((error, success) => {
+              console.log(error);
+              console.log(success);
+              if (error) return next(error);
+              res.locals.changePass = success;
+              next();
+            });
+          });
+        }
+      });
+    }
+  );
 };
 
 module.exports = userController;

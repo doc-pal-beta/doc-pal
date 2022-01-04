@@ -6,7 +6,7 @@ $fourth-color: #ececec;
 $bg: white;
 
 body{
-  font-family: 'Work Sans', sans-serif;;
+  font-family: 'Work Sans', sans-serif;
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-color: $primary-color;
@@ -19,6 +19,8 @@ h2 {
 	margin: 40px 20px;
   text-align: center;
   font-size: 40px;
+  font-family: 'Work Sans', sans-serif;
+  text-align: center;
 }
 strong {
   color: $primary-color;
@@ -36,9 +38,6 @@ label {
   color: $second-color;
   font-size: 16px;
   text-align: left;
-}
-h2{
-  text-align: center;
 }
 
 .container{
@@ -59,11 +58,13 @@ h2{
 .notMember {
   margin-bottom: 0;
 }
+
 .firstName{
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+
 .drop_down_btn{
   width: 50%;
   padding: 12px 20px;
@@ -78,7 +79,7 @@ h2{
   width: 100%;
   font-size: 16px;
   padding: 12px 20px;
-  margin: 8px 0;
+  margin: 8px 0px 8px 3px;
   display: inline-block;
   border: 5px solid c;
   box-sizing: border-box;
@@ -122,6 +123,36 @@ h2{
 // }
 
 .visitCard{
+  display: flex;
+  width: 50%;
+  height: 50%;
+  margin: 8px 0;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  display: inline-block;
+  border: 5px solid c;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  border-radius: .25rem;
+  box-shadow: 0 0 5px 2px rgb(71, 64, 64);
+  background-color: ivory;
+  cursor: pointer;
+}
+
+
+.data_list{
+  font-family: 'Work Sans', sans-serif;
+  width: 50%;
+  font-size: 15px;
+  font-weight: lighter;
+  color: $primary-color;
+  background-color: ivory;
+  text-align: center;
+}
+
+.DoctorHome{
   display: flex;
   width: 50%;
   height: 50%;
