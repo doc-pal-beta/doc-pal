@@ -56,7 +56,7 @@ const SignUp = ({setUserDetails}) => {
                 <input className='loginInput' type='password' name='password2' placeholder='Confirm Password' autoComplete='off'></input>
                 <br />
                 <div className='button'>
-                    <button className='btn' value='SignUp'>SignUp</button>
+                    <button className='btn' value='SignUp'>Sign Up</button>
                 </div>
             </form>
         </div>
