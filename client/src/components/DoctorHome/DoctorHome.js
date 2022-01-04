@@ -107,6 +107,7 @@ const DoctorHome = ({userDetails}) => {
       {visits.length > 0 && (<div className="subContainer">
         {visits}
       </div>)}
+      <br />
       <ToNewPatientPage />
       <ToHomePage />
     </div>
