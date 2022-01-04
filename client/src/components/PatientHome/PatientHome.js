@@ -45,7 +45,8 @@ const PatientHome = ({ userDetails, setUserDetails }) => {
       </button>
       <ToHomePage />
       <h1>Welcome {userData.firstName}</h1>
-      {userDetails.userData.visits.length > 0 &&
+      {userDetails.userData.visits.length === 0 && (<div className="visitCard">No Visit Yet!</div>)}
+      {userDetails.userData.visits.length > 0 && 
         userDetails.userData.visits.map((visit, key) => (
           <DatailVisitCard visit_Data={visit} key={key} />
         ))}

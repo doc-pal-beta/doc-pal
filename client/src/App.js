@@ -26,7 +26,10 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Login props={{ setUserDetails }} />} exact />
-        <Route path="/signup" element={<SignUp />} />
+        <Route
+          path="/signup"
+          element={<SignUp setUserDetails={setUserDetails} />}
+        />
         <Route
           path="/patient"
           element={
@@ -44,8 +47,14 @@ const App = () => {
           path="/new-patient"
           element={<NewPatient userDetails={userDetails} />}
         />
-        <Route path="/changePass" element={<ChangePass userDetails={userDetails} />} />
-        <Route path="/profile" element={<Datalist userDetails ={userDetails.userData} />} />
+        <Route
+          path="/changePass"
+          element={<ChangePass userDetails={userDetails} />}
+        />
+        <Route
+          path="/profile"
+          element={<Datalist userDetails={userDetails.userData} />}
+        />
       </Routes>
     </Router>
   );

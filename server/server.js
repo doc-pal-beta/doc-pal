@@ -68,14 +68,14 @@ app.get("/changePassword"), userController.changePassword, (req, res) => {
 
 //POST
 app.post("/doctors", userController.createDoctor, userController.startSession, (req, res) => {
-  res.status(200).json({newDoctor: res.locals.newDoctor, loggedIn: res.locals.loggedIn});
+  res.status(200).json({userData: res.locals.userData, loggedIn: res.locals.loggedIn, userType: res.locals.userType});
 });
 app.post(
   "/patients",
   userController.createPatient,
   userController.linkPatientToDoctor,
   (req, res) => {
-    res.status(200).json({newUser: res.locals.newPatient, tempPassword: res.locals.tempPassword});
+    res.status(200).json({userData: res.locals.userData, tempPassword: res.locals.tempPassword});
   }
 );
 app.post(
