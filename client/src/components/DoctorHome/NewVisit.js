@@ -32,9 +32,9 @@ const NewVisit = ({ setVisitCount, doctor, patient }) => {
     <div className="subContainer">
       <h1>New visit for patient {}</h1>
       <label className="label">
-        Date:
+        Date
         <input
-          className="textbox"
+          className="loginInput"
           type="text"
           id="newVisitDate"
           placeholder="MM/DD/YYYY"
@@ -42,9 +42,9 @@ const NewVisit = ({ setVisitCount, doctor, patient }) => {
       </label>
       <br></br>
       <label className="label">
-        Assessment:
+        Assessment
         <input
-          className="textbox"
+          className="loginInput"
           type="text"
           id="newVisitAssesment"
           placeholder="Assesment"
@@ -52,9 +52,9 @@ const NewVisit = ({ setVisitCount, doctor, patient }) => {
       </label>
       <br></br>
       <label className="label">
-        Plan:
+        Plan
         <input
-          className="textbox"
+          className="loginInput"
           type="text"
           id="newVisitPlan"
           placeholder="Plan"
@@ -63,9 +63,9 @@ const NewVisit = ({ setVisitCount, doctor, patient }) => {
       <br></br>
 
       <label className="label">
-        Prescription:
+        Prescription
         <input
-          className="textbox"
+          className="loginInput"
           type="text"
           id="newVisitPrescription"
           placeholder="Prescription"
@@ -74,18 +74,21 @@ const NewVisit = ({ setVisitCount, doctor, patient }) => {
       <br></br>
 
       <label className="label">
-        Home Care:
+        Home Care
         <input
-          className="textbox"
+          className="loginInput"
           type="text"
           id="newVisitHomeCare"
           placeholder="Home Care"
         ></input>
       </label>
       <br></br>
-      <button onClick={() => {
+      <button 
+      className = 'btn'
+      onClick={() => {
         handleSubmitClick()
         setVisitCount(0)
+        
       }}>Submit</button>
     </div>
   )

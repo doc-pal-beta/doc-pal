@@ -16,6 +16,7 @@ userController.getPatient = (req, res, next) => {
       next();
     });
 };
+
 userController.getPatients = (req, res, next) => {
   Patient.find(req.query)
     .populate(["primaryDoctor", "visits"])
@@ -59,7 +60,11 @@ userController.getVisits = (req, res, next) => {
 
 //POST
 userController.createDoctor = (req, res, next) => {
+  res.locals.userData = false;
+  res.locals.userType = "";
+  res.locals.loggedIn = false;
   bcrypt.hash(req.body.password, 10, (error, hash) => {
+    if (error) return next(error)
     Object.assign(req.body, { password: hash });
     Doctor.create(req.body, (error, success) => {
       if (error) res.sendStatus(400).json(error);
@@ -152,7 +157,7 @@ userController.startSession = (req, res, next) => {
       },
       privateKey, //ARG 2 PRIVATE KEY
       {
-        expiresIn: 60 * 60 * 2, //ARG 3 OPTIONS: 2 hour session expiry
+        expiresIn: 60*60*2, //ARG 3 OPTIONS: 2 hour session expiry
       },
       (err, token) => {
         // ARG 4 CALLBACK
@@ -161,7 +166,7 @@ userController.startSession = (req, res, next) => {
           httpOnly: true,
           sameSite: "none",
           secure: true,
-          maxAge: 6000000,
+          maxAge: 1000*60*60*2, //2 hour session expiry
         });
         return next();
       }
@@ -224,7 +229,7 @@ userController.doctorLogin = (req, res, next) => {
   Doctor.findOne({ firstName, lastName })
     .populate("patients")
     .exec((error, doctor) => {
-      if (error) return next(error);
+      if (error || !doctor) return next(error);
       bcrypt.compare(password, doctor.password, (error, result) => {
         if (error) return next(error);
         if (result === true) {
@@ -242,12 +247,10 @@ userController.doctorLogin = (req, res, next) => {
 
 userController.patientLogin = (req, res, next) => {
   const { firstName, lastName, password } = req.body;
-  console.log(req.body)
   Patient.findOne({ firstName, lastName })
     .populate(["visits", "primaryDoctor"])
     .exec((error, patient) => {
-      console.log(error, patient)
-      if (error) return next(error)
+      if (error || !patient) return next(error);
       bcrypt.compare(password, patient.password, (error, result) => {
         if (error) return next(error);
         if (result === true) {

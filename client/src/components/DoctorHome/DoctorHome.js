@@ -13,13 +13,13 @@ const DoctorHome = ({userDetails}) => {
   const handleNextClick = () => {
     if (currentPatientIndex < userDetails.userData.patients.length - 1) {
       setCurrentPatientIndex(currentPatientIndex+1)
-      setVisits(0)
+      setVisitCount(0)
     }
   }
   const handleBackClick = () => {
     if (currentPatientIndex > 0) {
       setCurrentPatientIndex(currentPatientIndex-1)
-      setVisits(0)
+      setVisitCount(0)
     }
   }
 
@@ -40,7 +40,7 @@ const DoctorHome = ({userDetails}) => {
         fullName == capitalizedSearchedPatien
       ) {
         setCurrentPatientIndex(i)
-        setVisits(0)
+        setVisitCount(0)
         return;
       }
     }
@@ -87,7 +87,6 @@ const DoctorHome = ({userDetails}) => {
       <h1>
         Hello Doctor {doctor.firstName} {doctor.lastName}
       </h1>
-
       <input className="loginInput" id="searchForPatient" placeholder="Search"></input>
       <button className="btn" onClick={() => handleSearchClick()}>
         Search Patient

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const NewPatient = ({userDetails}) => {
   const navigate = useNavigate();
@@ -10,8 +11,9 @@ const NewPatient = ({userDetails}) => {
     const lastName = document.getElementById("newPatientLastName").value;
     const dateOfBirth = document.getElementById("newPatientDOB").value;
     const language = document.getElementById("newPatientLanguage").value;
-    const gender = document.getElementById("newPatientGender").value;
     const address = document.getElementById("newPatientAddress").value;
+    const sex = document.getElementById("newPatientSex").value;
+
 
     fetch("http://localhost:3000/patients", {
       method: "POST",
@@ -21,9 +23,9 @@ const NewPatient = ({userDetails}) => {
         firstName,
         lastName,
         dateOfBirth,
-        sex: gender,
         language,
         address,
+        sex
       }),
       headers: { "Content-type": "application/json; charset=UTF-8" },
     })
@@ -45,32 +47,36 @@ const NewPatient = ({userDetails}) => {
       .catch(err => console.log('SignUp Failed', err))
   }
 
-    return (
-      <div className='container'>
-        <h2>New Patient {}</h2>
-        <div className = 'login'>
-          <strong>New Patient Info</strong>
-          <label className='label'> First Name
-            <input className='loginInput' type='text' id = 'newPatientFirstName' placeholder='First Name'></input>
-          </label>
-          <label className='label'> Last Name
-            <input className='loginInput' type='text' id = 'newPatientLastName' placeholder='Last Name'></input>
-          </label>
-          <label className='label'> Date of Birth
-            <input className='loginInput' type='text' id = 'newPatientDOB' placeholder='MM/DD/YYYY'></input>
-          </label>
-          <label className='label'> Language
-            <input className='loginInput' type='text' id = 'newPatientLanguage' placeholder='language'></input>
-          </label>
-          <label className='label'> Address
-            <input className='loginInput' type='text' id = 'newPatientAddress' placeholder='address'></input>
-          </label>
-          <br/>
-          <button className = 'btn' onClick = {() => this.handleSubmitClick()}>Submit</button>
-        </div>
-        
+  return (
+    <div className='container'>
+      <h2>New Patient {}</h2>
+      <div className = 'login'>
+        <strong>New Patient Info</strong>
+        <label className='label'> First Name
+          <input className='loginInput' type='text' id = 'newPatientFirstName' placeholder='First Name'></input>
+        </label>
+        <label className='label'> Last Name
+          <input className='loginInput' type='text' id = 'newPatientLastName' placeholder='Last Name'></input>
+        </label>
+        <label className='label'> Date of Birth
+          <input className='loginInput' type='text' id = 'newPatientDOB' placeholder='MM/DD/YYYY'></input>
+        </label>
+        <label className='label'> Language
+          <input className='loginInput' type='text' id = 'newPatientLanguage' placeholder='language'></input>
+        </label>
+        <label className='label'> Address
+          <input className='loginInput' type='text' id = 'newPatientAddress' placeholder='address'></input>
+        </label>
+        <label className='label'> Sex
+          <input className='loginInput' type='text' id = 'newPatientSex' placeholder='Sex'></input>
+        </label>
+        <br/>
+        <button className = 'btn' onClick = {() => handleSubmitClick()}>Submit</button>
+        <Link to="/doctor">Go Back</Link>
       </div>
-    )
+      
+    </div>
+  )
 }
 
 
