@@ -76,7 +76,7 @@ function SignUp() {
                 <input className='loginInput' type='password' name='password2' placeholder='Re-Enter Password' onChange={handleChange} value={details.password2}></input>
                 <br />
                 <div className='button'>
-                    <button className='btn' value='SignUp'>SignUp</button>
+                    <button className='btn' value='SignUp'>Sign Up</button>
                 </div>
             </form>
         </div>
