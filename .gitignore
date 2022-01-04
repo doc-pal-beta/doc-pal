@@ -1,2 +1,4 @@
-node_modules
-server/models/pass.json
+/node_modules
+/server/models/pass.json
+/dist
+package-lock

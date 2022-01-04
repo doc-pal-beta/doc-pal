@@ -3,24 +3,16 @@ import React, {Component} from 'react'
 
 
 
-class PatientCard extends Component {
-  // constructor(){
-  //   super();
-  //   this.state={
-  //   };
-  // }
-  render() {
-    return (
-      <div className='PatientCard'>
-        <div>
-          <p>First Name: {this.props.firstName}</p>
-          <p>Last Name: {this.props.lastName}</p>
-          <p>Date Of Birth: {this.props.dob}</p>
-          <p>Last Visit: {this.props.lastVisit}</p>
-        </div>
-      </div>
-    )
-  }
+const PatientCard = ({ firstName, lastName, dob, address}) => {
+
+  return (
+    <div className='subContainer'>
+      <p>First Name: {firstName}</p>
+      <p>Last Name: {lastName}</p>
+      <p>Date Of Birth: {dob}</p>
+      <p>Address: {address}</p>
+    </div>
+  )
 }
 
 export default PatientCard;
