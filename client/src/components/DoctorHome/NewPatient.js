@@ -40,105 +40,83 @@ const NewPatient = ({userDetails}) => {
             "Something Went Wrong! Please make sure all fields are correct!"
           );
       })
-      .catch((err) => console.log("SignUp Failed", err));
-  };
+      .then(response => response.text()) 
+      .then(json => console.log(json))
+      .catch(err => console.log('SignUp Failed', err))
+  }
 
-  return (
-    <div className="container">
-      <h1>New Patient</h1>
-      <label className="label">
-        First Name:
-        <input
-          className="textbox"
-          type="text"
-          id="newPatientFirstName"
-          placeholder="First Name"
-          autoComplete="off"
-        ></input>
-      </label>
-      <br />
-      <br />
-      <label className="label">
-        Last Name:
-        <input
-          className="textbox"
-          type="text"
-          id="newPatientLastName"
-          placeholder="Last Name"
-          autoComplete="off"
-        ></input>
-      </label>
-      <br />
-      <br />
-      <label className="label">
-        Date of Birth:
-        <input
-          className="textbox"
-          type="text"
-          id="newPatientDOB"
-          placeholder="MM/DD/YYYY"
-          autoComplete="off"
-        ></input>
-      </label>
-      <br />
-      <br />
+    return (
+      <div className='container'>
+        <h2>New Patient {}</h2>
+        <div className = 'login'>
+          <strong>New Patient Info</strong>
+          <label className='label'> First Name
+            <input className='loginInput' type='text' id = 'newPatientFirstName' placeholder='First Name'></input>
+          </label>
+          <label className='label'> Last Name
+            <input className='loginInput' type='text' id = 'newPatientLastName' placeholder='Last Name'></input>
+          </label>
+          <label className='label'> Date of Birth
+            <input className='loginInput' type='text' id = 'newPatientDOB' placeholder='MM/DD/YYYY'></input>
+          </label>
+          <label className='label'> Language
+            <input className='loginInput' type='text' id = 'newPatientLanguage' placeholder='language'></input>
+          </label>
+          <label className='label'> Address
+            <input className='loginInput' type='text' id = 'newPatientAddress' placeholder='address'></input>
+          </label>
+          <br/>
+          <button className = 'btn' onClick = {() => this.handleSubmitClick()}>Submit</button>
+        </div>
+        
+      </div>
+    )
+}
 
-      <label className="label">
-        Language:
-        <input
-          className="textbox"
-          type="text"
-          id="newPatientLanguage"
-          placeholder="language"
-          autoComplete="off"
-        ></input>
-      </label>
-      <br />
-      <br />
 
-      <label className="label">
-        E-Mail:
-        <input
-          className="textbox"
-          type="text"
-          id="MockEmail"
-          placeholder="E-Mail Address"
-          autoComplete="off"
-        ></input>
-      </label>
-      <br />
-      <br />
+  //     <label className="label">
+  //       E-Mail:
+  //       <input
+  //         className="textbox"
+  //         type="text"
+  //         id="MockEmail"
+  //         placeholder="E-Mail Address"
+  //         autoComplete="off"
+  //       ></input>
+  //     </label>
+  //     <br />
+  //     <br />
 
-      <label className="label">
-        Gender:
-        <input
-          className="textbox"
-          type="text"
-          id="newPatientGender"
-          placeholder="Gender"
-          autoComplete="off"
-        ></input>
-      </label>
-      <br />
-      <br />
+  //     <label className="label">
+  //       Gender:
+  //       <input
+  //         className="textbox"
+  //         type="text"
+  //         id="newPatientGender"
+  //         placeholder="Gender"
+  //         autoComplete="off"
+  //       ></input>
+  //     </label>
+  //     <br />
+  //     <br />
 
-      <label className="label">
-        Address:
-        <input
-          className="textbox"
-          type="text"
-          id="newPatientAddress"
-          placeholder="address"
-          autoComplete="off"
-        ></input>
-      </label>
-      <br />
-      <br />
-      <button className="btn" onClick={() => handleSubmitClick()}>
-        Submit
-      </button>
-    </div>
-  );
-};
+  //     <label className="label">
+  //       Address:
+  //       <input
+  //         className="textbox"
+  //         type="text"
+  //         id="newPatientAddress"
+  //         placeholder="address"
+  //         autoComplete="off"
+  //       ></input>
+  //     </label>
+  //     <br />
+  //     <br />
+  //     <button className="btn" onClick={() => handleSubmitClick()}>
+  //       Submit
+  //     </button>
+  //   </div>
+  // );
+// };
 
 export default NewPatient;

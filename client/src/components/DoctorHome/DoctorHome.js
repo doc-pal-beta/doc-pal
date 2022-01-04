@@ -90,9 +90,9 @@ class DoctorHome extends Component {
     }
     return (
       <div className="container">
-        <h1>
-          Hello Doctor {doctor.firstName} {doctor.lastName}
-        </h1>
+        <h2>
+          Hello Dr. {doctor.firstName} {doctor.lastName}
+        </h2>
 
         <input id="searchForPatient" placeholder="Search"></input>
         <button className="btn" onClick={() => this.handleSearchClick()}>
