@@ -27,7 +27,6 @@ const PatientHome = ({ userDetails, setUserDetails }) => {
       });
   }, []);
 
-  console.log('Patient Data are', userDetails.userData)
 
   const handleChangeProfile = () => {
     navigate('/profile')

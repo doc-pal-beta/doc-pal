@@ -10,7 +10,6 @@ const ChangePass = (props) => {
         <br />
           <form onSubmit={(e) => {
             e.preventDefault();
-          console.log(props.userDetails)
           if (e.target[1].value === e.target[2].value){
             fetch(`http://localhost:3000/patients/changePass`, {
               method: "PUT",

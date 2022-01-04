@@ -8,9 +8,8 @@ class Datalist extends Component {
 
     render() {
         const list= this.props.userDetails;
-        console.log('Passed in Data are', list.primaryDoctor)
         const docList = list.primaryDoctor;
-        console.log('Passed in Data are', list)
+        
         return (
             <div className='data_list'>
                 <h1>Profile Page</h1>
