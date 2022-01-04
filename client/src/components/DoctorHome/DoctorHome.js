@@ -87,7 +87,6 @@ const DoctorHome = ({userDetails}) => {
       <h1>
         Hello Doctor {doctor.firstName} {doctor.lastName}
       </h1>
-
       <input className="loginInput" id="searchForPatient" placeholder="Search"></input>
       <button className="btn" onClick={() => handleSearchClick()}>
         Search Patient
