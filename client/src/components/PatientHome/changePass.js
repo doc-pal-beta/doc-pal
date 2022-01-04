@@ -8,8 +8,8 @@ const ChangePass = (props) => {
       <div className='container'>
         <h1>Change Password</h1>
         <br />
-        <form onSubmit={(e) => {
-          e.preventDefault();
+          <form onSubmit={(e) => {
+            e.preventDefault();
           console.log(props.userDetails)
           if (e.target[1].value === e.target[2].value){
             fetch(`http://localhost:3000/patients/changePass`, {
@@ -34,18 +34,18 @@ const ChangePass = (props) => {
             })
           } else { alert("The inputted passwords do not match.")}
         }}>
+                <div className="subContainer">
           <label htmlFor="tempPass">Current Password</label>
           <input
-            className="textbox"
+            className="loginInput"
             type="password"
             id="tempPass"
             placeholder="Current Password"
             autoComplete="off"
-          ></input><br />
-          
+          ></input><br />       
           <label htmlFor="newPass">New Password</label>
           <input
-            className="textbox"
+            className="loginInput"
             type="password"
             id="newPass"
             placeholder="New Password"
@@ -53,13 +53,14 @@ const ChangePass = (props) => {
           ></input><br />
           <label htmlFor="confirmNewPass">Confirm New Password</label>
           <input
-            className="textbox"
+            className="loginInput"
             type="password"
             id="confirmNewPass"
             placeholder="New Password"
             autoComplete="off"
           ></input><br />
           <button className="btn">Submit</button>
+        </div>
         </form>
       </div>
     );
