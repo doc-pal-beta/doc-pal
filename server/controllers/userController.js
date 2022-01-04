@@ -134,7 +134,6 @@ userController.linkPatientToDoctor = (req, res, next) => {
     doctor.patients.push(patientId);
     doctor.save((err) => {
       if (err) next(err);
-      console.log(res.locals.userData)
       next();
     });
   });
@@ -142,7 +141,6 @@ userController.linkPatientToDoctor = (req, res, next) => {
 
 //Session Storage and store user meta data through JWT
 userController.startSession = (req, res, next) => {
-  console.log(res.locals.loggedIn)
   if (res.locals.loggedIn) {
     privateKey = fs.readFileSync(
       path.join(__dirname, "./privatekey.json"),
@@ -161,7 +159,6 @@ userController.startSession = (req, res, next) => {
       },
       (err, token) => {
         // ARG 4 CALLBACK
-        console.log(err, token)
         res.cookie("JWT", token, {
           httpOnly: true,
           sameSite: "none",
@@ -284,8 +281,6 @@ userController.changePassword = (req, res, next) => {
               { firstName: firstName, lastName: lastName },
               { password: hash }
             ).exec((error, success) => {
-              console.log(error);
-              console.log(success);
               if (error) return next(error);
               res.locals.changePass = success;
               next();

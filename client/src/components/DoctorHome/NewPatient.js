@@ -49,30 +49,23 @@ const NewPatient = ({userDetails}) => {
 
   return (
     <div className='container'>
-      <h2>New Patient {}</h2>
-      <div className = 'login'>
-        <strong>New Patient Info</strong>
-        <label className='label'> First Name
-          <input className='loginInput' type='text' id = 'newPatientFirstName' placeholder='First Name'></input>
-        </label>
-        <label className='label'> Last Name
-          <input className='loginInput' type='text' id = 'newPatientLastName' placeholder='Last Name'></input>
-        </label>
-        <label className='label'> Date of Birth
-          <input className='loginInput' type='text' id = 'newPatientDOB' placeholder='MM/DD/YYYY'></input>
-        </label>
-        <label className='label'> Language
-          <input className='loginInput' type='text' id = 'newPatientLanguage' placeholder='language'></input>
-        </label>
-        <label className='label'> Address
-          <input className='loginInput' type='text' id = 'newPatientAddress' placeholder='address'></input>
-        </label>
-        <label className='label'> Sex
-          <input className='loginInput' type='text' id = 'newPatientSex' placeholder='Sex'></input>
-        </label>
+      <h3>New Patient {}</h3>
+      <div style={{marginBottom:'15px'}}className = 'subContainer'>
+        <strong> First Name</strong>
+          <input className='loginInput' type='text' id = 'newPatientFirstName' placeholder='First Name'  autoComplete="off"></input>
+        <strong> Last Name</strong>
+          <input className='loginInput' type='text' id = 'newPatientLastName' placeholder='Last Name'  autoComplete="off"></input>
+        <strong> Date of Birth</strong>
+          <input className='loginInput' type='text' id = 'newPatientDOB' placeholder='MM/DD/YYYY'  autoComplete="off"></input>
+        <strong> Language</strong>
+          <input className='loginInput' type='text' id = 'newPatientLanguage' placeholder='language'  autoComplete="off"></input>
+        <strong> Address</strong>
+          <input className='loginInput' type='text' id = 'newPatientAddress' placeholder='address'  autoComplete="off"></input>
+        <strong> Sex</strong>
+          <input className='loginInput' type='text' id = 'newPatientSex' placeholder='Sex'  autoComplete="off"></input>
         <br/>
         <button className = 'btn' onClick = {() => handleSubmitClick()}>Submit</button>
-        <Link to="/doctor">Go Back</Link>
+        <Link style={{textDecoration:'none', fontSize:'13px'}} className='btn' to="/doctor">Go Back</Link>
       </div>
       
     </div>
@@ -80,7 +73,7 @@ const NewPatient = ({userDetails}) => {
 }
 
 
-  //     <label className="label">
+  //     <strong> className="label">
   //       E-Mail:
   //       <input
   //         className="textbox"
@@ -89,11 +82,11 @@ const NewPatient = ({userDetails}) => {
   //         placeholder="E-Mail Address"
   //         autoComplete="off"
   //       ></input>
-  //     </label>
+  //
   //     <br />
   //     <br />
 
-  //     <label className="label">
+  //     <strong> className="label">
   //       Gender:
   //       <input
   //         className="textbox"
@@ -102,11 +95,11 @@ const NewPatient = ({userDetails}) => {
   //         placeholder="Gender"
   //         autoComplete="off"
   //       ></input>
-  //     </label>
+  //
   //     <br />
   //     <br />
 
-  //     <label className="label">
+  //     <strong> className="label">
   //       Address:
   //       <input
   //         className="textbox"
@@ -115,7 +108,7 @@ const NewPatient = ({userDetails}) => {
   //         placeholder="address"
   //         autoComplete="off"
   //       ></input>
-  //     </label>
+  //
   //     <br />
   //     <br />
   //     <button className="btn" onClick={() => handleSubmitClick()}>

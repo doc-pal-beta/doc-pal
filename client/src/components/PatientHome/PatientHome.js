@@ -27,7 +27,6 @@ const PatientHome = ({ userDetails, setUserDetails }) => {
       });
   }, []);
 
-  console.log('Patient Data are', userDetails.userData)
 
   const handleChangeProfile = () => {
     navigate('/profile')
@@ -37,19 +36,23 @@ const PatientHome = ({ userDetails, setUserDetails }) => {
 
   return (
     <div className="container">
-      <button className="btn" onClick={handleChangePass}>
-        Change Password
-      </button>
-      <button className="btn" onClick={handleChangeProfile}>
-        Profile
-      </button>
-      <ToHomePage />
       <h1>Welcome {userData.firstName}</h1>
+      <div>
+        <button className="btn" onClick={handleChangePass}>
+          Change Password
+        </button>
+        <button className="btn" onClick={handleChangeProfile}>
+          Profile
+        </button>
+      <ToHomePage />
+      </div>
+      <div id='visitCardContainer'>
       {userDetails.userData.visits.length === 0 && (<div className="subContainer visitCard">No Visit Yet!</div>)}
       {userDetails.userData.visits.length > 0 && 
-        userDetails.userData.visits.map((visit, key) => (
+        userDetails.userData.visits.reverse().map((visit, key) => (
           <DatailVisitCard visit_Data={visit} key={key} />
-        ))}
+          ))}
+      </div>
     </div>
   );
 };

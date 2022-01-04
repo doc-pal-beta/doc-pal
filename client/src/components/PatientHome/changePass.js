@@ -1,20 +1,15 @@
 import React, { Component } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const ChangePass = (props) => {
   const navigate = useNavigate();
   
     return (
-<<<<<<< HEAD
-      <div className="container">
-=======
       <div className='container'>
->>>>>>> dev
         <h1>Change Password</h1>
         <br />
           <form onSubmit={(e) => {
             e.preventDefault();
-          console.log(props.userDetails)
           if (e.target[1].value === e.target[2].value){
             fetch(`http://localhost:3000/patients/changePass`, {
               method: "PUT",
@@ -38,7 +33,7 @@ const ChangePass = (props) => {
             })
           } else { alert("The inputted passwords do not match.")}
         }}>
-                <div className="subContainer">
+                <div style={{marginBottom:'15px'}} className="subContainer">
           <label htmlFor="tempPass">Current Password</label>
           <input
             className="loginInput"
@@ -64,6 +59,13 @@ const ChangePass = (props) => {
             autoComplete="off"
           ></input><br />
           <button className="btn">Submit</button>
+          <Link
+            style={{ textDecoration: "none", fontSize: "13px" }}
+            className="btn"
+            to="/patient"
+          >
+            Go Back
+          </Link>
         </div>
         </form>
       </div>

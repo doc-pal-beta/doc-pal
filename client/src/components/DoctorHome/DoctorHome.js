@@ -87,11 +87,11 @@ const DoctorHome = ({userDetails}) => {
       <h1>
         Hello Doctor {doctor.firstName} {doctor.lastName}
       </h1>
-      <input className="loginInput" id="searchForPatient" placeholder="Search"></input>
+      <input className="loginInput" id="searchForPatient" placeholder="Search" autoComplete="off"></input>
       <button className="btn" onClick={() => handleSearchClick()}>
         Search Patient
       </button>
-      <div className="subContainer">
+      <div>
         {patient}
       </div>
       <button className="btn" onClick={() => handleBackClick()}>
@@ -103,7 +103,8 @@ const DoctorHome = ({userDetails}) => {
       <button className="btn" onClick={() => handleNextClick()}>
         Next
       </button>
-      {visits.length > 0 && (<div className="subContainer">
+      {visits.length > 0 && (
+      <div>
         {visits}
       </div>)}
       <br />

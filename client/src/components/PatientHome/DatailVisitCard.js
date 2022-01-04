@@ -9,16 +9,13 @@ class DatailVisitCard extends Component {
         
         return (
             <div className='visitCard'> 
-                <div>
-                    <p>Date: {this.props.visit_Data.date}</p>
-                    <p>Plan: {this.props.visit_Data.plan}</p>
-                    <p>Assessment: {this.props.visit_Data.assessment}</p>                    
-                    <p>Objective: {this.props.visit_Data.objective}</p>                    
-                    <p>Prescription: {this.props.visit_Data.prescription}</p>
-                    <p>HomeCare: {this.props.visit_Data.homeCare}</p>                   
-                    <br />
-                </div>
-                
+                <p>Date: {this.props.visit_Data.date}</p>
+                <p>Plan: {this.props.visit_Data.plan}</p>
+                <p>Assessment: {this.props.visit_Data.assessment}</p>                    
+                <p>Objective: {this.props.visit_Data.objective}</p>                    
+                <p>Prescription: {this.props.visit_Data.prescription}</p>
+                <p>HomeCare: {this.props.visit_Data.homeCare}</p>                   
+                <br />
             </div>
         )
     }
