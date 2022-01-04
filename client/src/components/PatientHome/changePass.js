@@ -5,7 +5,11 @@ const ChangePass = (props) => {
   const navigate = useNavigate();
   
     return (
+<<<<<<< HEAD
       <div className="container">
+=======
+      <div className='container'>
+>>>>>>> dev
         <h1>Change Password</h1>
         <br />
           <form onSubmit={(e) => {
