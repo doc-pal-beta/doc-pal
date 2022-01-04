@@ -44,7 +44,7 @@ const App = () => {
           path="/new-patient"
           element={<NewPatient userDetails={userDetails} />}
         />
-        <Route path="/changePass" element={<ChangePass />} />
+        <Route path="/changePass" element={<ChangePass userDetails={userDetails} />} />
         <Route path="/profile" element={<Datalist userDetails ={userDetails.userData} />} />
       </Routes>
     </Router>
