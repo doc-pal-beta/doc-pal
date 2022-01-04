@@ -30,7 +30,7 @@ const NewVisit = ({ setVisitCount, doctor, patient }) => {
 
   return (
     <div className="subContainer">
-      <h1>New visit for patient {}</h1>
+      <h3>New visit for {patient.firstName}</h3>
       <label className="label">
         Date
         <input
@@ -38,6 +38,7 @@ const NewVisit = ({ setVisitCount, doctor, patient }) => {
           type="text"
           id="newVisitDate"
           placeholder="MM/DD/YYYY"
+          autoComplete="off"
         ></input>
       </label>
       <br></br>
@@ -48,6 +49,7 @@ const NewVisit = ({ setVisitCount, doctor, patient }) => {
           type="text"
           id="newVisitAssesment"
           placeholder="Assesment"
+          autoComplete="off"
         ></input>
       </label>
       <br></br>
@@ -58,6 +60,7 @@ const NewVisit = ({ setVisitCount, doctor, patient }) => {
           type="text"
           id="newVisitPlan"
           placeholder="Plan"
+          autoComplete="off"
         ></input>
       </label>
       <br></br>
@@ -69,6 +72,7 @@ const NewVisit = ({ setVisitCount, doctor, patient }) => {
           type="text"
           id="newVisitPrescription"
           placeholder="Prescription"
+          autoComplete="off"
         ></input>
       </label>
       <br></br>
@@ -80,6 +84,7 @@ const NewVisit = ({ setVisitCount, doctor, patient }) => {
           type="text"
           id="newVisitHomeCare"
           placeholder="Home Care"
+          autoComplete="off"
         ></input>
       </label>
       <br></br>

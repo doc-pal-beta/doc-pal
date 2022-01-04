@@ -67,7 +67,7 @@ const Login = ({ props }) => {
             });
         }}
       >
-        <strong>Patient Log In</strong>
+        <h3>Patient Log In</h3>
         <br />
         {/* <p className="error_msg">{formErrors.member}</p> */}
         <label htmlFor="firstName">First Name</label>
@@ -141,7 +141,7 @@ const Login = ({ props }) => {
       >
         <br />
         <br />
-        <strong>Doctor Log In</strong>
+        <h3>Doctor Log In</h3>
         <br />
 
         {/* <p className="error_msg">{formErrors.member}</p> */}
@@ -168,6 +168,7 @@ const Login = ({ props }) => {
           className="loginInput"
           id="doc-password"
           placeholder="Password"
+          autoComplete="off"
         ></input>
         <br />
 

@@ -23,8 +23,14 @@ class Datalist extends Component {
                 <p>Primary Doctor:{list.primaryDoctor.firstName+" "+ list.primaryDoctor.lastName}</p>
                 <br/>
                 </div>
-    
-                <Link to="/patient">Go Back</Link>
+                <br/>
+                <Link
+          style={{ textDecoration: "none", fontSize: "13px" }}
+          className="btn"
+          to="/patient"
+        >
+          Go Back
+        </Link><br/><br/>
             </div>
         )
     }
