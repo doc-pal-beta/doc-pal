@@ -14,6 +14,7 @@ class Datalist extends Component {
         return (
             <div className='container'>
                 <h1>Profile Page</h1>
+                <div className='subContainer'>
                 <p>First Name: {list.firstName}</p>
                 <p>Last Name: {list.lastName}</p>
                 <p>Date Of Birth: {list.dateOfBirth}</p>
@@ -22,6 +23,8 @@ class Datalist extends Component {
                 <p>Male/Female: {list.sex} </p>
                 <p>Primary Doctor:{list.primaryDoctor.firstName+" "+ list.primaryDoctor.lastName}</p>
                 <br/>
+                </div>
+    
                 <Link to="/patient">Go Back</Link>
             </div>
         )

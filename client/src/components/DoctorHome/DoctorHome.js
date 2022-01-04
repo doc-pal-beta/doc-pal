@@ -1,69 +1,60 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ToHomePage from "./LogOutButton";
 import ToNewPatientPage from "./NewPatientButton";
 import NewVisit from "./NewVisit";
 import PatientCard from "./PatientCard";
 
-class DoctorHome extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentPatientIndex: 0,
-      visits: 0,
-    };
-  }
-  handleNextClick() {
-    if (
-      this.state.currentPatientIndex <
-      this.props.userDetails.userData.patients.length - 1
-    ) {
-      this.setState({
-        currentPatientIndex: this.state.currentPatientIndex + 1,
-        visits: 0,
-      });
+const DoctorHome = ({userDetails}) => {
+  const [currentPatientIndex, setCurrentPatientIndex] = useState(0)
+  const [visitCount, setVisitCount] = useState(0)
+  const navigate = useNavigate()
+
+  const handleNextClick = () => {
+    if (currentPatientIndex < userDetails.userData.patients.length - 1) {
+      setCurrentPatientIndex(currentPatientIndex+1)
+      setVisits(0)
     }
   }
-  handleBackClick() {
-    if (this.state.currentPatientIndex > 0) {
-      this.setState({
-        currentPatientIndex: this.state.currentPatientIndex - 1,
-        visits: 0,
-      });
+  const handleBackClick = () => {
+    if (currentPatientIndex > 0) {
+      setCurrentPatientIndex(currentPatientIndex-1)
+      setVisits(0)
     }
   }
-  handleSearchClick() {
+
+  const handleSearchClick = () => {
     const searchedPatient = document.getElementById("searchForPatient").value;
-    if (searchedPatient === "") {
-      return;
-    }
-    const patients = this.props.userDetails.userData.patients;
+    const capitalizedSearchedPatien = searchedPatient[0].toUpperCase() + searchedPatient.slice(1)
+    if (capitalizedSearchedPatien === "") return
+
+    const patients = userDetails.userData.patients;
 
     for (let i = 0; i < patients.length; i++) {
       const fullName = patients[i].firstName + " " + patients[i].lastName;
       const firstName = patients[i].firstName;
       const lastName = patients[i].lastName;
       if (
-        firstName === searchedPatient ||
-        lastName === searchedPatient ||
-        fullName == searchedPatient
+        firstName === capitalizedSearchedPatien ||
+        lastName === capitalizedSearchedPatien ||
+        fullName == capitalizedSearchedPatien
       ) {
-        this.setState({
-          currentPatientIndex: i,
-          visits: 0,
-        });
+        setCurrentPatientIndex(i)
+        setVisits(0)
         return;
       }
     }
   }
-  handleVisitClick() {
-    this.setState({
-      visits: 1,
-    });
+
+  const handleVisitClick = () => {
+    setVisitCount(1)
   }
-  handleNewPatientClick() {
-    Navigate("/new-patient");
+
+  const handleNewPatientClick = () => {
+    navigate("/new-patient");
   }
-  createPatientCard(currentPatient) {
+
+  const createPatientCard = (currentPatient) => {
     if (!currentPatient) {
       return <h1>No Patients Yet</h1>;
     } else {
@@ -72,48 +63,55 @@ class DoctorHome extends Component {
           firstName={currentPatient.firstName}
           lastName={currentPatient.lastName}
           dob={currentPatient.dateOfBirth}
+          address={currentPatient.address}
+          setVisitCount={setVisitCount}
         ></PatientCard>
       );
     }
   }
-  render() {
-    const doctor = this.props.userDetails.userData;
-    const patients = this.props.userDetails.userData.patients;
-    let currentPatient = patients[this.state.currentPatientIndex];
-    const patient = this.createPatientCard(currentPatient);
 
-    const visits = [];
-    for (let i = 0; i < this.state.visits; i++) {
-      visits.push(
-        <NewVisit key={i} doctor={doctor} patient={currentPatient}></NewVisit>
-      );
-    }
-    return (
-      <div className="container">
-        <h2>
-          Hello Dr. {doctor.firstName} {doctor.lastName}
-        </h2>
+  const doctor = userDetails.userData;
+  const patients = userDetails.userData.patients;
+  let currentPatient = patients[currentPatientIndex];
+  const patient = createPatientCard(currentPatient);
 
-        <input id="searchForPatient" placeholder="Search"></input>
-        <button className="btn" onClick={() => this.handleSearchClick()}>
-          Search Patient
-        </button>
-        {patient}
-        <button className="btn" onClick={() => this.handleBackClick()}>
-          Back
-        </button>
-        <button className="btn" onClick={() => this.handleVisitClick()}>
-          Add Visit
-        </button>
-        <button className="btn" onClick={() => this.handleNextClick()}>
-          Next
-        </button>
-        {visits}
-        <ToNewPatientPage />
-        <ToHomePage />
-      </div>
+  const visits = [];
+  for (let i = 0; i < visitCount; i++) {
+    visits.push(
+      <NewVisit key={i} doctor={doctor} patient={currentPatient} setVisitCount={setVisitCount}></NewVisit>
     );
   }
+
+  return (
+    <div className="container">
+      <h1>
+        Hello Doctor {doctor.firstName} {doctor.lastName}
+      </h1>
+
+      <input className="loginInput" id="searchForPatient" placeholder="Search"></input>
+      <button className="btn" onClick={() => handleSearchClick()}>
+        Search Patient
+      </button>
+      <div className="subContainer">
+        {patient}
+      </div>
+      <button className="btn" onClick={() => handleBackClick()}>
+        Back
+      </button>
+      <button className="btn" onClick={() => handleVisitClick()}>
+        Add Visit
+      </button>
+      <button className="btn" onClick={() => handleNextClick()}>
+        Next
+      </button>
+      {visits.length > 0 && (<div className="subContainer">
+        {visits}
+      </div>)}
+      <br />
+      <ToNewPatientPage />
+      <ToHomePage />
+    </div>
+  );
 }
 
 export default DoctorHome;
