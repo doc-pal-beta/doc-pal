@@ -44,7 +44,7 @@ const NewPatient = ({userDetails}) => {
       .then(json => console.log(json))
       .catch(err => console.log('SignUp Failed', err))
   }
-  render() {
+
     return (
       <div className='container'>
         <h2>New Patient {}</h2>
@@ -71,8 +71,8 @@ const NewPatient = ({userDetails}) => {
         
       </div>
     )
-  }
 }
+
 
   //     <label className="label">
   //       E-Mail:
